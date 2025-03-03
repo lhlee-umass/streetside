@@ -11,7 +11,7 @@ Sustainable Squirrels (Team 21)
 # Team Members (names and GitHub usernames)
 Landrick Diaz - lrdiaz
 Laurie Lee - lhlee-umass
-Angela Ho - 
+Angela Ho - angho8
 David Zhan - zhandavidz
 
 # Brief Overview of the Application
