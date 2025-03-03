@@ -1,18 +1,14 @@
 # streetside
-COMPSCI 426
 
+**Project Name:** Street Side
 
-# Project Name
-Street Side
+**Team Name**: Sustainable Squirrels (Team 21)
 
-# Team Name
-Sustainable Squirrels (Team 21)
-
-# Team Members (names and GitHub usernames)
-Landrick Diaz - lrdiaz
-Laurie Lee - lhlee-umass
-Angela Ho - angho8
-David Zhan - zhandavidz
+**Team Members (names and GitHub usernames)**
+- Landrick Diaz - `lrdiaz`
+- Laurie Lee - `lhlee-umass`
+- Angela Ho - `angho8`
+- David Zhan - `zhandavidz`
 
 # Brief Overview of the Application
 Due to overconsumption and impulse buying, many have products they don’t want or need anymore. At the same time, many struggle to afford products they need. Many sellers try to profit the most they can off of the things they don’t really need, and end up selling them to people who don’t need them (and would just end up as clutter), or even not selling them. This leads to excessive waste, which is environmentally harmful. 
