@@ -15,7 +15,7 @@ Due to overconsumption and impulse buying, many have products they don’t want 
 
 We seek to implement a community-driven app that requires that every product sold is either free or a couple dollars (maybe < $10). Security and trustworthiness of the app can be moderated through profile verification, reviews, and a town-based map system. This app will address the global issues of unsustainable over-consumption and income inequality.
 
-This app targets individuals with low-income, eco-conscious consumers, and people who need to declutter their homes
+This app targets individuals with low-income, eco-conscious consumers, and people who need to declutter their homes.
 
 
 # Placeholder for future setup instructions (this will be expanded in later sprints)
