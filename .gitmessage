@@ -1,0 +1,23 @@
+
+# -----------------------------------------
+# 
+# Commit messages for 426 Final Project!
+# 
+# remember to be:
+# - clear and concise
+# - use the imperative mood
+#   - ex: "Fix button alignment" instead of "Fixed button alignment"
+# - provide context on what was changed and why
+# 
+# EXAMPLE:
+# 
+# feat: Implement dynamic filtering in task list
+# 
+# - Added dropdown filter for priority levels
+# - Implemented real-time filtering using state updates
+# - Adjusted UI styling for better readability
+# 
+# Resolves #23
+# 
+# -----------------------------------------
+# 
