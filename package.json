@@ -1,14 +1,18 @@
 {
   "name": "streetside",
   "version": "0.1.0",
+  "type": "module",
   "workspaces": [
     "frontend"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=frontend",
     "build": "npm run build --workspace=frontend",
-    "lint": "npm run lint --workspace=frontend",
-    "preview": "npm run preview --workspace=frontend"
+    "lint": "eslint .",
+    "check": "eslint . && prettier --check .",
+    "format": "eslint --fix . && prettier --write .",
+    "preview": "npm run preview --workspace=frontend",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -18,5 +22,17 @@
   "bugs": {
     "url": "https://github.com/lhlee-umass/streetside/issues"
   },
-  "homepage": "https://github.com/lhlee-umass/streetside#readme"
+  "homepage": "https://github.com/lhlee-umass/streetside#readme",
+  "devDependencies": {
+    "eslint-config-prettier": "^10.1.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "3.5.3"
+  },
+  "lint-staged": {
+    "**/*": [
+      "eslint --fix",
+      "prettier --write --ignore-unknown"
+    ]
+  }
 }
