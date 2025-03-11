@@ -1,0 +1,22 @@
+{
+  "name": "streetside",
+  "version": "0.1.0",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend",
+    "preview": "npm run preview --workspace=frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lhlee-umass/streetside.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/lhlee-umass/streetside/issues"
+  },
+  "homepage": "https://github.com/lhlee-umass/streetside#readme"
+}
