@@ -78,3 +78,31 @@ npm run format
 Before each commit, Husky will run the `lint-staged` script. This runs ESLint and Prettier on the files that are staged for commit. If there are any issues, the commit will be aborted.
 
 There are also default commit messages where I've copied over the project requirements and included the official example.
+
+# Development
+
+## Frontend Organization: `src`
+
+We are using React Router for routing. We have slightly modified the purpose of the default `main.tsx` and `App.tsx`:
+- `main.tsx` is the main entry point for the app
+  - imports `index.css` which has TailwindCSS
+  - renders the `BrowserRouter` to enable routing through `react-router`
+  - renders the `App` component
+- `App.tsx` is a main layout component for the whole app
+  - could include a `navbar`, `footer`, and other layout components
+  - renders the actual page component through `react-router`'s `<Outlet />`
+
+Folders are split into:
+- `components`: reusable components
+  - ex: `Button.tsx`, `Input.tsx`, `Card.tsx`
+    - each component should be a single, reusable component that can be used in multiple places
+  - things like `Navbar.tsx` and `Footer.tsx` are also included here
+- `pages`: the main page components that are routed to
+  - ex: `Home.tsx`, `About.tsx`, `Login.tsx`, `Register.tsx`
+  - each returns a JSX element that is the main component rendered by the router
+  - each component will be rendered under a header (navbar) and possibly above a footer, and can include other components from `components`
+- `utils`: utility functions and shared constants
+  - ex: `pages.tsx` contains a list of pages, their names, their routes, so that different components can easily reference it
+    - `main.tsx` references `pages.tsx` to know what pages to have routes to
+    - `navbar.tsx` references `pages.tsx` to know what pages to have links to
+    - by having a single shared `pages` file, we can unify the list of pages and not have inconsistencies
