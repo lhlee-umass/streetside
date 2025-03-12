@@ -1,0 +1,4 @@
+# Ignore artifacts:
+*.html
+*.md
+*.txt
