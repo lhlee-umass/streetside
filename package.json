@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "npm run dev --workspace=frontend",
     "build": "npm run build --workspace=frontend",
-    "lint": "eslint .",
-    "check": "eslint . && prettier --check .",
-    "format": "eslint --fix . && prettier --write .",
+    "lint": "eslint . --max-warnings=0",
+    "prettier": "prettier --check .",
+    "check": "eslint . --max-warnings=0 && prettier --check .",
+    "fix": "eslint --fix . && prettier --write .",
     "preview": "npm run preview --workspace=frontend",
     "prepare": "husky"
   },
@@ -31,8 +32,8 @@
   },
   "lint-staged": {
     "**/*": [
-      "eslint --fix",
-      "prettier --write --ignore-unknown"
+      "eslint --fix .",
+      "prettier --write ."
     ]
   }
 }

@@ -1,4 +1,10 @@
 # Ignore artifacts:
-*.html
-*.md
-*.txt
+**/*.html
+**/*.md
+**/*.txt
+**/package.json
+**/package-lock.json
+**/node_modules
+**/dist
+**/build
+.*/**/*
