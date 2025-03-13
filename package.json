@@ -34,5 +34,9 @@
       "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
+  },
+  "dependencies": {
+    "lucide-react": "^0.479.0",
+    "react": "^19.0.0"
   }
 }
