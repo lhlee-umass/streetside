@@ -35,9 +35,5 @@
       "eslint --fix .",
       "prettier --write ."
     ]
-  },
-  "dependencies": {
-    "@types/react": "^19.0.10",
-    "react": "^19.0.0"
   }
 }
