@@ -1,0 +1,26 @@
+[
+    {
+      "id": "1",
+      "title": "iPhone 13 Pro",
+      "description": "Barely used iPhone 13 Pro, great condition",
+      "price": 799.99,
+      "location": "Amherst, MA",
+      "image": "/images/iphone.jpg",
+      "tags": ["Electronics"],
+      "date": "2025-03-14",
+      "condition": "Used",
+      "distance": 2.3 
+    },
+    {
+      "id": "2",
+      "title": "Leather Sofa",
+      "description": "Beautiful brown leather sofa",
+      "price": 0.99,
+      "location": "Sunderland, MA",
+      "image": "/images/sofa.jpg",
+      "tags": ["Furniture"],
+      "date": "2025-02-28",
+      "condition": "Used",
+      "distance": 5.8
+    }
+]
