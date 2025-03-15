@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import ListingCard from '../components/listing-card/ListingCard' // Import the ListingCard component
 
 const Home = () => {
@@ -86,7 +86,7 @@ const Home = () => {
     maxPrice: 9999999,
   })
 
-  // State for sorted listings
+  // State for filtered listings
   const [filteredListings, setFilteredListings] = useState(listings)
 
   // Effect hook to apply filters
