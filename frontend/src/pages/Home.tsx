@@ -1,82 +1,87 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import ListingCard from '../components/listing-card/ListingCard' // Import the ListingCard component
 
 const Home = () => {
   // Sample listing data
-  const listings = [
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Cozy Apartment in the City',
-      description: 'A beautiful apartment with all the amenities you need.',
-      price: 1200,
-      location: 'New York, NY',
-      tags: ['Apartment', 'City Center'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Beachfront Property',
-      description: 'Luxurious beachfront property with stunning views.',
-      price: 3500,
-      location: 'Malibu, CA',
-      tags: ['House', 'Beachfront'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Modern Loft',
-      description: 'Spacious modern loft with open floor plan and city views.',
-      price: 2200,
-      location: 'San Francisco, CA',
-      tags: ['Loft', 'Modern'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Downtown Studio',
-      description: 'Compact studio in the heart of downtown.',
-      price: 900,
-      location: 'Austin, TX',
-      tags: ['Studio', 'Downtown'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Cozy Apartment in the City',
-      description: 'A beautiful apartment with all the amenities you need.',
-      price: 1200,
-      location: 'New York, NY',
-      tags: ['Apartment', 'City Center'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Beachfront Property',
-      description: 'Luxurious beachfront property with stunning views.',
-      price: 3500,
-      location: 'Malibu, CA',
-      tags: ['House', 'Beachfront'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Modern Loft',
-      description: 'Spacious modern loft with open floor plan and city views.',
-      price: 2200,
-      location: 'San Francisco, CA',
-      tags: ['Loft', 'Modern'],
-    },
-    {
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      title: 'Downtown Studio',
-      description: 'Compact studio in the heart of downtown.',
-      price: 900,
-      location: 'Austin, TX',
-      tags: ['Studio', 'Downtown'],
-    },
-  ]
+  const listings = useMemo(
+    () => [
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Cozy Apartment in the City',
+        description: 'A beautiful apartment with all the amenities you need.',
+        price: 1200,
+        location: 'New York, NY',
+        tags: ['Apartment', 'City Center'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Beachfront Property',
+        description: 'Luxurious beachfront property with stunning views.',
+        price: 3500,
+        location: 'Malibu, CA',
+        tags: ['House', 'Beachfront'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Modern Loft',
+        description:
+          'Spacious modern loft with open floor plan and city views.',
+        price: 2200,
+        location: 'San Francisco, CA',
+        tags: ['Loft', 'Modern'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Downtown Studio',
+        description: 'Compact studio in the heart of downtown.',
+        price: 900,
+        location: 'Austin, TX',
+        tags: ['Studio', 'Downtown'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Cozy Apartment in the City',
+        description: 'A beautiful apartment with all the amenities you need.',
+        price: 1200,
+        location: 'New York, NY',
+        tags: ['Apartment', 'City Center'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Beachfront Property',
+        description: 'Luxurious beachfront property with stunning views.',
+        price: 3500,
+        location: 'Malibu, CA',
+        tags: ['House', 'Beachfront'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Modern Loft',
+        description:
+          'Spacious modern loft with open floor plan and city views.',
+        price: 2200,
+        location: 'San Francisco, CA',
+        tags: ['Loft', 'Modern'],
+      },
+      {
+        image:
+          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
+        title: 'Downtown Studio',
+        description: 'Compact studio in the heart of downtown.',
+        price: 900,
+        location: 'Austin, TX',
+        tags: ['Studio', 'Downtown'],
+      },
+    ],
+    []
+  )
 
   // State for filter values
   const [filters, setFilters] = useState({
