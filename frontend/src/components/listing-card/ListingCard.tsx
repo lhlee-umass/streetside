@@ -66,9 +66,9 @@ const ListingCard: React.FC<ListingCardProps> = ({
             {tags.map((tag, index) => (
               <span
                 key={index}
-                className="px-2 py-1 text-xs bg-gray-200 rounded-md"
+                className="px-2 py-1 text-xs bg-gray-200 rounded-md text-black"
               >
-                <Tag size={12} className="inline-block mr-1" /> {tag}
+                <Tag size={12} className="inline-block mr-1 text-black" /> {tag}
               </span>
             ))}
           </div>
