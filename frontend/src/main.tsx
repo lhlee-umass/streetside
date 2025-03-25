@@ -6,6 +6,7 @@ import App from './App'
 import Home from './pages/Home'
 import NotFoundPage from './pages/404NotFound'
 import { pages } from './utils/pages'
+import MessageSellerPage from './pages/MessageSellerPage'
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
@@ -19,6 +20,9 @@ createRoot(document.getElementById('root')!).render(
           ))}
 
           <Route path="*" element={<NotFoundPage />} />
+        </Route>
+        <Route path="/message-seller" element={<MessageSellerPage />}>
+          <Route index element={<MessageSellerPage />} />
         </Route>
       </Routes>
     </StrictMode>
