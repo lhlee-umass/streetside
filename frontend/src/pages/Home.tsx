@@ -191,6 +191,7 @@ const Home = () => {
               onFavorite={() => {
                 console.log(`Favorite clicked for ${listing.title}`)
               }}
+              onMessageSeller={() => {}}
             />
           ))}
         </div>

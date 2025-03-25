@@ -32,6 +32,7 @@ interface ListingCardProps {
   location: string
   tags?: string[]
   onFavorite?: () => void
+  onMessageSeller?: () => void // Add onMessageSeller function prop
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
@@ -42,6 +43,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   location,
   tags = [],
   onFavorite,
+  onMessageSeller, // Accept onMessageSeller as prop
 }) => {
   return (
     <Card className="w-full max-w-sm rounded-2xl shadow-lg hover:shadow-xl transition">
@@ -86,6 +88,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
           <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
             View Details
           </button>
+
+          {/* Message Seller Button */}
+          {onMessageSeller && (
+            <button
+              onClick={onMessageSeller}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 ml-2"
+            >
+              Message Seller
+            </button>
+          )}
         </div>
       </CardContent>
     </Card>
