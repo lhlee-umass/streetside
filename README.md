@@ -27,6 +27,7 @@ With your node version set to 22.14.0 (as specified in `.nvmrc`), run:
 ```bash
 npm install
 npm run dev
+npm install react-router-dom
 ```
 
 This is the intended setup for the project. If you encounter any issues, please let us know.
