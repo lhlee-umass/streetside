@@ -1,5 +1,6 @@
 import React from 'react'
 import { Heart, MapPin, Tag } from 'lucide-react'
+import { Link } from 'react-router'
 
 // Main Card Wrapper
 export const Card: React.FC<{
@@ -91,12 +92,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
           {/* Message Seller Button */}
           {onMessageSeller && (
-            <button
-              onClick={onMessageSeller}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 ml-2"
-            >
-              Message Seller
-            </button>
+            <Link to="/message-seller">
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                Message Seller
+              </button>
+            </Link>
           )}
         </div>
       </CardContent>
