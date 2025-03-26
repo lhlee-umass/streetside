@@ -1,8 +1,9 @@
-import React from 'react'
-import Home from './pages/Home'
+import { Outlet } from 'react-router'
 
-const App: React.FC = () => {
-  return <Home />
+export default function App() {
+  return (
+    <>
+      <Outlet />
+    </>
+  )
 }
-
-export default App

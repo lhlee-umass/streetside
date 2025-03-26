@@ -1,6 +1,6 @@
 import React from 'react'
 import { Heart, MapPin, Tag } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 // Main Card Wrapper
 export const Card: React.FC<{
