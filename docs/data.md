@@ -43,30 +43,38 @@ Mock Data in [`/frontend/src/api/mock-data/`](/frontend/src/api/mock-data/):
 
 ```typescript
 interface API {
+  auth: AuthAPI;
   users: UsersAPI;
   messages: MessagesAPI;
   reviews: ReviewsAPI;
   listings: ListingsAPI;
 }
 
+interface AuthAPI {
+  login(email: string): Promise<User>; // blindly logs in the user with correct email
+  logout(): Promise<void>; // logs out the current user
+  register(user: User): Promise<User>; // creates user
+}
+
 interface UsersAPI {
   getUser(userId: number): Promise<User>;
   getUsers(): Promise<User[]>;
-  createUser(user: User): Promise<User>;
   updateUser(user: User): Promise<User>;
-  deleteUser(userId: number): Promise<void>;
 }
 
 interface MessagesAPI {
   getMessage(messageId: number): Promise<Message>;
   getMessages(): Promise<Message[]>;
+  getMessagesInvolvingUser(userId: number): Promise<Message[]>;
   sendMessage(message: Message): Promise<Message>;
-  deleteMessage(messageId: number): Promise<void>;
 }
 
 interface ReviewsAPI {
   getReview(reviewId: number): Promise<Review>;
   getReviews(): Promise<Review[]>;
+  getReviewsForUser(userId: number): Promise<Review[]>;
+  getReviewsByUser(userId: number): Promise<Review[]>;
+  getAverageRatingForUser(userId: number): Promise<number>;
   createReview(review: Review): Promise<Review>;
   updateReview(review: Review): Promise<Review>;
   deleteReview(reviewId: number): Promise<void>;
@@ -75,18 +83,21 @@ interface ReviewsAPI {
 interface ListingsAPI {
   getListing(listingId: number): Promise<Listing>;
   getListings(): Promise<Listing[]>;
+  getListingsFromUser(userId: number): Promise<Listing[]>;
   createListing(listing: Listing): Promise<Listing>;
   updateListing(listing: Listing): Promise<Listing>;
   deleteListing(listingId: number): Promise<void>;
+  saveListing(listingId: number): Promise<void>;
+  unsaveListing(listingId: number): Promise<void>;
 }
 ``` 
 
 ### IndexedDB Schema:
 
 #### Users
-```json
-id [integer, uuid] : {
-  user_id: integer [uuid, primary key],
+```
+id [integer, ulid] : {
+  user_id: integer [ulid, primary key],
   username: string [unique],
   first_name: string,
   last_name: string,
@@ -97,9 +108,9 @@ id [integer, uuid] : {
 }
 ```
 #### Messages
-```json
-id [integer, uuid] : {
-  message_id: integer [primary key],
+```
+id [integer, ulid] : {
+  message_id: integer [ulid, primary key],
   sender_id: integer [foreign key],
   receiver_id: integer [foreign key],
   message: string,
@@ -107,26 +118,27 @@ id [integer, uuid] : {
 }
 ```
 #### Reviews
-```json
-id [integer, uuid] : {
-  review_id: integer [primary key],
+```
+id [integer, ulid] : {
+  review_id: integer [ulid, primary key],
   reviewer_id: integer [foreign key],
   reviewee_id: integer [foreign key],
+  reviewer_is_buyer: boolean,
   rating: integer,
   message: string,
   created_at: timestamp
 }
 ```
 #### Listings
-```json
-id [integer, uuid] : {
-  listing_id: integer [primary key],
+```
+id [integer, ulid] : {
+  listing_id: integer [ulid, primary key],
   seller_id: integer [foreign key],
   title: string,
   description: string,
   price: float,
   quality: string,
-  categories: array[string],
+  tags: array[string],
   location_name: string,
   location_lat: float,
   location_long: float,
@@ -134,5 +146,13 @@ id [integer, uuid] : {
   images: array[blob],
   created_at: timestamp,
   updated_at: timestamp
+}
+```
+#### SavedListings
+```
+id [integer, ulid] : {
+  listing_id: integer [foreign key],
+  user_id: integer [foreign key],
+  saved_at: timestamp
 }
 ```
