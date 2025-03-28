@@ -42,6 +42,11 @@ type Listing = {
   created_at: string // epoch as string
   updated_at: string // epoch as string
 }
+type SavedListing = {
+  listing_id: number // foreign key: listing_id
+  user_id: number // foreign key: user_id
+  saved_at: string // epoch as string
+}
 
 interface LocalDB extends DBSchema {
   users: {
@@ -60,6 +65,10 @@ interface LocalDB extends DBSchema {
     key: number // listing_id
     value: Listing
   }
+  savedListings: {
+    key: number // listing_id -- foreign id
+    value: SavedListing
+  }
 }
 
-export type { LocalDB, User, Message, Review, Listing }
+export type { LocalDB, User, Message, Review, Listing, SavedListing }

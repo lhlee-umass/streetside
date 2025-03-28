@@ -1,4 +1,4 @@
-import { LocalDB } from './dbTypes'
+import { LocalDB } from './types'
 import { openDB, IDBPDatabase } from 'idb'
 
 const DB_NAME = 'streetsideDB'
@@ -22,6 +22,7 @@ async function initDB(): Promise<IDBPDatabase<LocalDB>> {
         db.createObjectStore('messages', { keyPath: 'message_id' })
         db.createObjectStore('reviews', { keyPath: 'review_id' })
         db.createObjectStore('listings', { keyPath: 'listing_id' })
+        db.createObjectStore('savedListings', { keyPath: 'listing_id' })
       },
     })
     console.log('Database initialized successfully')
