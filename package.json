@@ -7,7 +7,9 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=frontend",
+    "dev:mock": "npm run dev:mock --workspace=frontend",
     "build": "npm run build --workspace=frontend",
+    "build:mock": "npm run build:mock --workspace=frontend",
     "lint": "eslint . --max-warnings=0",
     "prettier": "prettier --check .",
     "check": "eslint . --max-warnings=0 && prettier --check .",
@@ -35,5 +37,8 @@
       "eslint --fix .",
       "prettier --write ."
     ]
+  },
+  "dependencies": {
+    "idb": "^8.0.2"
   }
 }

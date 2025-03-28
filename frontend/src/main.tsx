@@ -7,6 +7,9 @@ import Home from './pages/Home'
 import NotFoundPage from './pages/404NotFound'
 import { pages } from './utils/pages'
 import MessageSellerPage from './pages/MessageSellerPage'
+import getDB from './api/localDB'
+
+getDB()
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
