@@ -9,8 +9,8 @@ export default function TopBar() {
           to="/"
           className="text-xl font-bold flex items-center hover:text-green-200"
         >
-          <span className="mr-2">🌱</span>
-          EcoSwap
+          <span className="mr-2">♻️👜</span>
+          streetside
         </Link>
         <div className="flex space-x-6">
           <Link
