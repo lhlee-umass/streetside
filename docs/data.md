@@ -4,7 +4,7 @@ We will use IndexedDB for client-side storage and PostgreSQL (or some other rela
 
 For **Milestone 1**:
 - We will use IndexedDB as a mock database.
-- Mock data will be stored in a `mockData.json` file.
+- Mock data will be stored as `JSON` files in a the [`/frontend/src/api/mock-data/`](/frontend/src/api/mock-data/) directory.
 - We will load the mock data into IndexedDB when the page is initially loaded.
 - API abstraction will initialize IndexedDB on load and use it directly to respond to API calls.
 
@@ -13,6 +13,27 @@ For **the future**:
 - We will convert IndexedDB to an offline cache for better responsiveness and offline capabilities.
 - API abstraction will fetch data from the server when online and from IndexedDB when offline.
   - It will also handle syncing between online and offline storages.
+
+# Mocking and Simulation (Milestone 1)
+
+### Requirements (from specs):
+
+- All data must be fabricated and maintained within the front-end.
+- Store and retrieve data using in-memory JavaScript/TypeScript structures
+- Use IndexedDB, LocalStorage, or SessionStorage (We're choosing IndexedDB).
+- Not allowed to do any external API calls or back-end services.
+
+## Implementation
+
+Mock Data in [`/frontend/src/api/mock-data/`](/frontend/src/api/mock-data/):
+- [`users.json`](/frontend/src/api/mock-data/users.json)
+  - https://www.mockaroo.com/1d515910
+- [`messages.json`](/frontend/src/api/mock-data/messages.json)
+  - https://www.mockaroo.com/eb79c880
+- [`reviews.json`](/frontend/src/api/mock-data/reviews.json)
+  - https://www.mockaroo.com/871f1ae0
+- [`listings.json`](/frontend/src/api/mock-data/listings.json)
+  - https://www.mockaroo.com/b6a946d0
 
 # Overall Schema
 
@@ -115,15 +136,3 @@ id [integer, uuid] : {
   updated_at: timestamp
 }
 ```
-
-# Mocking and Simulation (Milestone 1)
-
-### Requirements:
-
-- All data must be fabricated and maintained within the front-end.
-- Store and retrieve data using in-memory JavaScript/TypeScript structures
-- Use IndexedDB, LocalStorage, or SessionStorage (We're choosing IndexedDB).
-- Not allowed to do any external API calls or back-end services.
-
-## Implementation
-
