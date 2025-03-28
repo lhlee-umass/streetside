@@ -31,7 +31,39 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+*/
+/* Navigation styles */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
 
+/* Ensure content isn't hidden behind fixed bars */
+main {
+  padding-top: 5rem; /* Space for top bar */
+  padding-bottom: 5rem; /* Space for bottom bar */
+}
+
+/* Navigation link transitions */
+nav a {
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+nav a:hover {
+  transform: translateY(-2px);
+}
+
+/* Light mode adjustments */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+}
+/*
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
