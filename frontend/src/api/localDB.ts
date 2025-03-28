@@ -49,7 +49,7 @@ async function initDB(): Promise<IDBPDatabase<LocalDB>> {
       // want to use mock data and have no mock data
       if (env.VITE_USE_MOCK_DATA && userCount === 0) {
         console.log('Initializing database with Mock Data...')
-        await initializeMockData(database)
+        initializeMockData(database)
         console.log('Database initialized with Mock Data!')
       }
     }
@@ -63,7 +63,7 @@ async function initDB(): Promise<IDBPDatabase<LocalDB>> {
 
 const createCRUD = <T>(storeName: ObjStore): dbInterface<T> => {
   return {
-    create: async (data: T): Promise<number> => {
+    create: async (data: T): Promise<string> => {
       try {
         return (await getDB()).add(storeName, data as ObjType)
       } catch (err) {
@@ -71,7 +71,7 @@ const createCRUD = <T>(storeName: ObjStore): dbInterface<T> => {
         throw new Error('Failed to add data')
       }
     },
-    get: async (id: number): Promise<T> => {
+    get: async (id: string): Promise<T> => {
       try {
         return (await getDB()).get(storeName, id) as T
       } catch (err) {
@@ -95,7 +95,7 @@ const createCRUD = <T>(storeName: ObjStore): dbInterface<T> => {
         throw new Error('Failed to update data')
       }
     },
-    delete: async (id: number): Promise<void> => {
+    delete: async (id: string): Promise<void> => {
       try {
         await (await getDB()).delete(storeName, id)
       } catch (err) {
