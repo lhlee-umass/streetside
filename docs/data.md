@@ -114,7 +114,7 @@ id [integer, ulid] : {
   sender_id: integer [foreign key],
   receiver_id: integer [foreign key],
   message: string,
-  sent_at: timestamp
+  sent_at: timestamp [epoch as string]
 }
 ```
 #### Reviews
@@ -126,7 +126,7 @@ id [integer, ulid] : {
   reviewer_is_buyer: boolean,
   rating: integer,
   message: string,
-  created_at: timestamp
+  created_at: timestamp [epoch as string]
 }
 ```
 #### Listings
@@ -144,8 +144,8 @@ id [integer, ulid] : {
   location_long: float,
   location_radius: float,
   images: array[blob],
-  created_at: timestamp,
-  updated_at: timestamp
+  created_at: timestamp [epoch as string],
+  updated_at: timestamp [epoch as string]
 }
 ```
 #### SavedListings
@@ -153,6 +153,6 @@ id [integer, ulid] : {
 id [integer, ulid] : {
   listing_id: integer [foreign key],
   user_id: integer [foreign key],
-  saved_at: timestamp
+  saved_at: timestamp [epoch as string]
 }
 ```
