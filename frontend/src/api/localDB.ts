@@ -1,3 +1,6 @@
+import { openDB, IDBPDatabase } from 'idb'
+import { env } from '../../src/config/config'
+import { initializeMockData } from './mockData'
 import {
   LocalDB,
   User,
@@ -9,12 +12,12 @@ import {
   ObjStore,
   ObjType,
 } from './types'
-import { openDB, IDBPDatabase } from 'idb'
 
 const DB_NAME = 'streetsideDB'
 const DB_VERSION = 1
 
 let db: Promise<IDBPDatabase<LocalDB>> | null = null
+let isMocking = false
 
 async function getDB(): Promise<IDBPDatabase<LocalDB>> {
   if (!db) {
@@ -37,7 +40,19 @@ async function initDB(): Promise<IDBPDatabase<LocalDB>> {
     })
     console.log('Database initialized successfully')
 
-    // TODO: initialize with mock data depending on environment variable
+    console.log(env.VITE_USE_MOCK_DATA)
+
+    if (!isMocking) {
+      isMocking = true
+      const userCount = await database.count('users')
+
+      // want to use mock data and have no mock data
+      if (env.VITE_USE_MOCK_DATA && userCount === 0) {
+        console.log('Initializing database with Mock Data...')
+        await initializeMockData(database)
+        console.log('Database initialized with Mock Data!')
+      }
+    }
 
     return database
   } catch (err) {

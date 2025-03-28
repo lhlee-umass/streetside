@@ -27,7 +27,12 @@ With your node version set to 22.14.0 (as specified in `.nvmrc`), run:
 ```bash
 npm install
 npm run dev
-npm install react-router-dom
+```
+
+In order to run with mock data, you will need to run with a slightly modified `dev:mock` command to initialize the "backend" (IndexedDB) with mock data:
+```bash
+npm install
+npm run dev:mock
 ```
 
 This is the intended setup for the project. If you encounter any issues, please let us know.
@@ -48,6 +53,11 @@ npm install
 Run the development server with `npm run dev`:
 ```bash
 npm run dev
+```
+
+Run the development server with mock data with `npm run dev:mock`:
+```bash
+npm run dev:mock
 ```
 
 Build the project into a `dist` folder with `npm run build`:
