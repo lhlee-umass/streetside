@@ -71,4 +71,25 @@ interface LocalDB extends DBSchema {
   }
 }
 
-export type { LocalDB, User, Message, Review, Listing, SavedListing }
+type ObjStore = 'users' | 'messages' | 'reviews' | 'listings' | 'savedListings'
+type ObjType = User | Message | Review | Listing | SavedListing
+
+interface dbInterface<T> {
+  create: (data: T) => Promise<number>
+  get: (id: number) => Promise<T>
+  getAll: () => Promise<T[]>
+  update: (data: T) => Promise<void>
+  delete: (id: number) => Promise<void>
+}
+
+export type {
+  LocalDB,
+  ObjStore,
+  ObjType,
+  User,
+  Message,
+  Review,
+  Listing,
+  SavedListing,
+  dbInterface,
+}
