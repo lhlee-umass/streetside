@@ -8,6 +8,7 @@ import NotFoundPage from './pages/404NotFound'
 import { pages } from './utils/pages'
 import MessageSellerPage from './pages/MessageSellerPage'
 import getDB from './api/localDB'
+import Profile from './pages/ProfilePage'
 
 getDB()
 
@@ -26,6 +27,9 @@ createRoot(document.getElementById('root')!).render(
         </Route>
         <Route path="/message-seller" element={<MessageSellerPage />}>
           <Route index element={<MessageSellerPage />} />
+        </Route>
+        <Route path="/profile" element={<Profile />}>
+          <Route index element={<Profile />} />
         </Route>
       </Routes>
     </StrictMode>
