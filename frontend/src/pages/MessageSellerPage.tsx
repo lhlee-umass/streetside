@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { MessageBubble } from '../components/message-bubble/MessageBubble'
+import { Link } from 'react-router' // Import Link for navigation
 
 // Define the type for each message
 type Message = {
@@ -26,9 +27,17 @@ const MessageSellerPage: React.FC = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto min-h-screen flex flex-col p-4">
-      <h2 className="text-2xl font-bold mb-4">Message Seller</h2>
+      {/* Header section with button next to it */}
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">Message Seller</h2>
+        <Link to="/profile">
+          <button className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 text-lg">
+            Seller Profile
+          </button>
+        </Link>
+      </div>
 
-      <div className="flex flex-col flex-grow space-y-4 bg-gray-100 p-4 rounded-lg shadow-sm overflow-y-auto max-h-[60vh]">
+      <div className="flex flex-col flex-grow space-y-4 bg-gray-100 p-4 rounded-lg shadow-sm overflow-y-auto max-h-[60vh] w-full">
         {/* Render message bubbles */}
         {messages.map((msg, index) => (
           <MessageBubble key={index} sender={msg.sender} text={msg.text} />
