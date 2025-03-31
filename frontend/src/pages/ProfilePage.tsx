@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Users, Reviews } from '../api/api.ts' // Adjust the import based on where your api.js file is
+import { Users, Reviews } from '../api/api.ts'
 import ProfilePicture from '../components/profile/ProfilePicture'
 import UsernameHandle from '../components/profile/UsernameHandle'
 import RewardPoints from '../components/profile/RewardPoints'
 import ReviewTile from '../components/profile/ReviewTile'
 import VerificationBadge from '../components/profile/VerificationBadge'
-import './styles.css'
 import { User, Review } from 'src/api/types.ts'
+import StarRating from '../components/profile/StarRating.tsx'
 
 const ProfilePage: React.FC = () => {
   const [profileData, setProfileData] = useState<User | null>(null)
@@ -38,68 +38,54 @@ const ProfilePage: React.FC = () => {
   }, []) // Empty dependency array ensures this effect runs once
 
   if (!profileData) {
-    return <div>Loading...</div>
-  }
-
-  // Helper function to generate star icons
-  const renderStars = (rating: number) => {
-    const fullStars = Math.floor(rating)
-    const halfStar = rating % 1 >= 0.5 ? 1 : 0
-    const emptyStars = 5 - fullStars - halfStar
-
     return (
-      <div className="star-rating">
-        {'★'.repeat(fullStars)}
-        {halfStar === 1 && '☆'}
-        {'☆'.repeat(emptyStars)}
+      <div className="flex justify-center items-center h-screen text-lg text-white">
+        Loading...
       </div>
     )
   }
 
   return (
-    <div className="profile-page">
-      <div className="profile-header">
-        <div className="profile-header-left">
+    <div className="flex flex-col h-screen overflow-y-auto bg-gray-700 p-5">
+      {/* Profile Header */}
+      <div className="profile-header mb-5 flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start space-y-6 md:space-y-0 md:space-x-6">
+        <div className="flex-shrink-0">
           <ProfilePicture
             imageUrl={profileData.profile_img}
-            altText="Profile Picture"
-            size={200}
+            name="Profile Picture"
+            size={250}
           />
         </div>
-        <div className="profile-header-right">
-          <div className="profile-info">
+        <div className="flex-grow space-y-5 text-center md:text-left text-lg">
+          <div className="space-y-5">
             <UsernameHandle
               username={profileData.username}
               isVerified={profileData.verifications.length > 0}
             />
-            <VerificationBadge
-              isVerified={profileData.verifications.length > 0}
-              badgeText="Verified User"
-            />
-            {/* Average rating display */}
-            <div className="average-rating">
-              <h3>Average Rating: {averageRating.toFixed(1)} / 5</h3>
-              {renderStars(averageRating)} {/* Display stars */}
+            <VerificationBadge verifications={profileData.verifications} />
+            {/* Average Rating */}
+            <div className="text-lg font-bold text-white">
+              <h3>Average Rating:</h3>
+              <div className="flex items-center justify-center md:justify-start">
+                <StarRating rating={averageRating} totalStars={5} />
+                <span className="ml-2">({averageRating} / 5)</span>
+              </div>
             </div>
             <RewardPoints points={profileData.reward_points} />
           </div>
         </div>
       </div>
 
-      <div className="reviews-section">
-        <h2>User Reviews</h2>
-        {reviews.map((review: Review, index: number) => (
-          <ReviewTile
-            key={index}
-            reviewId={review.review_id}
-            reviewerId={review.reviewer_id}
-            revieweeId={review.reviewee_id}
-            reviewerIsBuyer={review.reviewer_is_buyer}
-            rating={review.rating}
-            message={review.message}
-            createdAt={review.created_at}
-          />
-        ))}
+      {/* Reviews Section */}
+      <div className="reviews-section mt-8 flex-grow overflow-y-auto pb-5">
+        <h2 className="text-3xl font-semibold text-white mb-8">User Reviews</h2>
+        {reviews.length > 0 ? (
+          reviews.map((review: Review, index: number) => (
+            <ReviewTile key={index} review={review} />
+          ))
+        ) : (
+          <div className="text-lg text-gray-400">No reviews available.</div>
+        )}
       </div>
     </div>
   )

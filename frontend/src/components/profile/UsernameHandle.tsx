@@ -11,7 +11,7 @@ const UsernameHandle: React.FC<UsernameHandleProps> = ({
 }) => {
   return (
     <div className="username-handle">
-      <span>{username}</span>
+      <span>@{username}</span>
       {isVerified && <span className="verified-badge">✔</span>}
     </div>
   )

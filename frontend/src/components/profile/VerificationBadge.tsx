@@ -1,22 +1,31 @@
 import React from 'react'
 
 interface VerificationBadgeProps {
-  isVerified: boolean
-  badgeText: string
+  verifications: string[] // Array of verification statuses (e.g., ['UMass'])
 }
 
 const VerificationBadge: React.FC<VerificationBadgeProps> = ({
-  isVerified,
-  badgeText,
+  verifications,
 }) => {
   return (
     <div
-      className={`verification-badge ${isVerified ? 'verified' : 'unverified'}`}
+      className={`${
+        verifications.length > 0 ? 'bg-green-500 py-1' : 'bg-red-500 py-3'
+      } px-3 rounded-md inline-block font-semibold text-white flex items-center justify-center`}
     >
-      {isVerified ? (
-        <span className="badge-text">{badgeText}</span>
+      {verifications.length > 0 ? (
+        <div>
+          <span className="text-m">Verified as:</span>
+          <ul className="mt-1 list-none pl-0">
+            {verifications.map((verification, index) => (
+              <li key={index} className="mt-1 text-m">
+                {verification}
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
-        <span className="badge-text">Not Verified</span>
+        <span className="text-m">Not Verified</span>
       )}
     </div>
   )

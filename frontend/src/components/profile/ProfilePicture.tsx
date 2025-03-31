@@ -2,19 +2,19 @@ import React from 'react'
 
 interface ProfilePictureProps {
   imageUrl: string
-  altText: string
+  name: string
   size?: number // Default size is 100px if not provided
 }
 
 const ProfilePicture: React.FC<ProfilePictureProps> = ({
   imageUrl,
-  altText,
+  name,
   size = 100,
 }) => {
   return (
     <img
       src={imageUrl}
-      alt={altText}
+      alt={`Profile Picture of: ${name}`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
