@@ -14,8 +14,7 @@
     "prettier": "prettier --check .",
     "check": "eslint . --max-warnings=0 && prettier --check .",
     "fix": "eslint --fix . && prettier --write .",
-    "preview": "npm run preview --workspace=frontend",
-    "prepare": "husky && husky install"
+    "preview": "npm run preview --workspace=frontend"
   },
   "repository": {
     "type": "git",
