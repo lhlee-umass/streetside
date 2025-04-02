@@ -26,12 +26,14 @@ This app targets individuals with low-income, eco-conscious consumers, and peopl
 With your node version set to 22.14.0 (as specified in `.nvmrc`), run:
 ```bash
 npm install
+npm install react-icons
 npm run dev
 ```
 
 In order to run with mock data, you will need to run with a slightly modified `dev:mock` command to initialize the "backend" (IndexedDB) with mock data:
 ```bash
 npm install
+npm install react-icons
 npm run dev:mock
 ```
 
