@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router'
 import React, { useState } from 'react'
 
 const AuthPage: React.FC = () => {
@@ -9,6 +10,8 @@ const AuthPage: React.FC = () => {
   })
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -34,9 +37,14 @@ const AuthPage: React.FC = () => {
       return
     }
     setSuccess(
-      isLogin ? 'Login successful!' : 'Sign up successful! Go to log in.'
+      isLogin ? 'Login successful! Logging you in...' : 'Sign up successful! Logging you in...'
     )
     console.log(isLogin ? 'Logging in...' : 'Signing up...')
+
+    // Navigate to the home page ("/") after successful login/signup
+    setTimeout(() => {
+      navigate('/') // This will redirect to the home page
+    }, 1000) // Optional: Adding a slight delay for visual feedback before navigating
   }
 
   return (
