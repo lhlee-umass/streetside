@@ -89,7 +89,7 @@ const Home = () => {
     searchTerm: '',
     category: '',
     minPrice: 0,
-    maxPrice: 9999999,  
+    maxPrice: 9999999,
   })
 
   // State for filtered listings
@@ -128,11 +128,14 @@ const Home = () => {
         Streetside Marketplace
       </h1>
       <div className="flex justify-end px-4 mb-6">
-      <Link to="/login">
-      <button className="p-2 border rounded-md text-white" style={{ padding: '8px 15px', fontSize: '20px', cursor: 'pointer' }}>
-          Login
-        </button>
-      </Link>
+        <Link to="/login">
+          <button
+            className="p-2 border rounded-md text-white"
+            style={{ padding: '8px 15px', fontSize: '20px', cursor: 'pointer' }}
+          >
+            Login
+          </button>
+        </Link>
       </div>
 
       <div className="container mx-auto px-4">

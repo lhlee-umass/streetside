@@ -37,7 +37,9 @@ const AuthPage: React.FC = () => {
       return
     }
     setSuccess(
-      isLogin ? 'Login successful! Logging you in...' : 'Sign up successful! Logging you in...'
+      isLogin
+        ? 'Login successful! Logging you in...'
+        : 'Sign up successful! Logging you in...'
     )
     console.log(isLogin ? 'Logging in...' : 'Signing up...')
 

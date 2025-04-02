@@ -23,7 +23,7 @@ createRoot(document.getElementById('root')!).render(
           {pages.map((page) => (
             <Route key={page.name} path={page.href} element={page.element} />
           ))}
-          <Route path="/login" element={<Auth />} /> 
+          <Route path="/login" element={<Auth />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="/message-seller" element={<MessageSellerPage />}>
