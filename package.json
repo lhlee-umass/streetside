@@ -14,8 +14,7 @@
     "prettier": "prettier --check .",
     "check": "eslint . --max-warnings=0 && prettier --check .",
     "fix": "eslint --fix . && prettier --write .",
-    "preview": "npm run preview --workspace=frontend",
-    "prepare": "husky"
+    "preview": "npm run preview --workspace=frontend"
   },
   "repository": {
     "type": "git",
@@ -28,7 +27,6 @@
   "homepage": "https://github.com/lhlee-umass/streetside#readme",
   "devDependencies": {
     "eslint-config-prettier": "^10.1.1",
-    "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "3.5.3"
   },

@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router'
 import ListingCard from '../components/listing-card/ListingCard' // Import the ListingCard component
 
 const Home = () => {
@@ -126,6 +127,16 @@ const Home = () => {
       <h1 className="text-3xl font-bold text-center my-8">
         Streetside Marketplace
       </h1>
+      <div className="flex justify-end px-4 mb-6">
+        <Link to="/login">
+          <button
+            className="p-2 border rounded-md text-white"
+            style={{ padding: '8px 15px', fontSize: '20px', cursor: 'pointer' }}
+          >
+            Login
+          </button>
+        </Link>
+      </div>
 
       <div className="container mx-auto px-4">
         {/* Filters */}
