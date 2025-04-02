@@ -55,7 +55,7 @@ const AuthPage: React.FC = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full p-3 text-black border border-gray-300 rounded-lg"
+            className="w-full p-3 text-white border border-gray-300 rounded-lg"
             placeholder="Email"
             required
           />
@@ -64,7 +64,7 @@ const AuthPage: React.FC = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-3 text-black border border-gray-300 rounded-lg"
+            className="w-full p-3 text-white border border-gray-300 rounded-lg"
             placeholder="Password"
             required
           />
@@ -74,7 +74,7 @@ const AuthPage: React.FC = () => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="w-full p-3 text-black border border-gray-300 rounded-lg"
+              className="w-full p-3 text-white border border-gray-300 rounded-lg"
               placeholder="Confirm Password"
               required
             />
