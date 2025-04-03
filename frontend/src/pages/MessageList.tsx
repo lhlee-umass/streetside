@@ -53,7 +53,7 @@ const MessageList: React.FC = () => {
       setSelectedConversation({ ...selectedConversation, messages: updatedMessages });
       setMessageInput('');
     }
-  };
+  };   
 
   return (
     <div className="w-full max-w-6xl mx-auto min-h-screen flex flex-col md:flex-row p-4 space-y-4 md:space-y-0 md:space-x-4">
