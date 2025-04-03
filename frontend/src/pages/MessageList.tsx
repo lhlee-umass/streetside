@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
-import { MessageBubble } from '../components/message-bubble/MessageBubble';
-import { Link } from 'react-router';
+import React, { useState } from 'react'
+import { MessageBubble } from '../components/message-bubble/MessageBubble'
+import { Link } from 'react-router'
 
 // Define a type for a conversation
 interface Conversation {
-  id: number;
-  name: string;
-  messages: Message[];
+  id: number
+  name: string
+  messages: Message[]
 }
 
 // Define a type for a message
 interface Message {
-  sender: 'seller' | 'user';
-  text: string;
+  sender: 'seller' | 'user'
+  text: string
 }
 
 const MessageList: React.FC = () => {
-  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
-  const [messageInput, setMessageInput] = useState('');
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation | null>(null)
+  const [messageInput, setMessageInput] = useState('')
 
   // Placeholder conversation data
   const conversations: Conversation[] = [
@@ -26,14 +27,20 @@ const MessageList: React.FC = () => {
       name: 'Laurie Lee Sauce',
       messages: [
         { sender: 'seller', text: 'Hi there! How can I help?' },
-        { sender: 'user', text: 'yes u can omg it’s so cute how soon can it be picked up 🧍🏻‍♀️🧍🏻‍♀️' },
+        {
+          sender: 'user',
+          text: 'yes u can omg it’s so cute how soon can it be picked up 🧍🏻‍♀️🧍🏻‍♀️',
+        },
       ],
     },
     {
       id: 2,
       name: 'Land Man',
       messages: [
-        { sender: 'user', text: 'hiiii how r u ? 🧟‍♂️ is this still available ?? 🤔' },
+        {
+          sender: 'user',
+          text: 'hiiii how r u ? 🧟‍♂️ is this still available ?? 🤔',
+        },
         { sender: 'seller', text: 'why yes it is 😍' },
       ],
     },
@@ -41,25 +48,39 @@ const MessageList: React.FC = () => {
       id: 3,
       name: 'Davidddd',
       messages: [
-        { sender: 'user', text: 'hi i noticed this is the newest addition, can you tell me why you would want to sell' },
-        { sender: 'seller', text: 'Sadly, I have no need for it anymore, I just don\'t want it' },
+        {
+          sender: 'user',
+          text: 'hi i noticed this is the newest addition, can you tell me why you would want to sell',
+        },
+        {
+          sender: 'seller',
+          text: "Sadly, I have no need for it anymore, I just don't want it",
+        },
       ],
     },
-  ];
+  ]
 
   const handleSendMessage = () => {
     if (messageInput.trim() && selectedConversation) {
-      const updatedMessages = [...selectedConversation.messages, { sender: 'user', text: messageInput } as const];
-      setSelectedConversation({ ...selectedConversation, messages: updatedMessages });
-      setMessageInput('');
+      const updatedMessages = [
+        ...selectedConversation.messages,
+        { sender: 'user', text: messageInput } as const,
+      ]
+      setSelectedConversation({
+        ...selectedConversation,
+        messages: updatedMessages,
+      })
+      setMessageInput('')
     }
-  };   
+  }
 
   return (
     <div className="w-full max-w-6xl mx-auto min-h-screen flex flex-col md:flex-row p-4 space-y-4 md:space-y-0 md:space-x-4">
       {/* Conversation List */}
       <div className="w-full md:w-1/3 bg-gray-100 p-4 rounded-lg shadow-md h-full">
-        <h2 className="text-xl font-semibold mb-4 text-gray-800">Conversations</h2>
+        <h2 className="text-xl font-semibold mb-4 text-gray-800">
+          Conversations
+        </h2>
         <ul className="space-y-2">
           {conversations.map((conversation) => (
             <li
@@ -78,7 +99,9 @@ const MessageList: React.FC = () => {
         {selectedConversation ? (
           <>
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold">Chat with {selectedConversation.name}</h2>
+              <h2 className="text-2xl font-bold">
+                Chat with {selectedConversation.name}
+              </h2>
               <Link to="/profile">
                 <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm">
                   View Profile
@@ -88,7 +111,11 @@ const MessageList: React.FC = () => {
 
             <div className="flex flex-col flex-grow space-y-4 bg-gray-100 p-4 rounded-lg overflow-y-auto max-h-[60vh]">
               {selectedConversation.messages.map((msg, index) => (
-                <MessageBubble key={index} sender={msg.sender} text={msg.text} />
+                <MessageBubble
+                  key={index}
+                  sender={msg.sender}
+                  text={msg.text}
+                />
               ))}
             </div>
 
@@ -115,7 +142,7 @@ const MessageList: React.FC = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MessageList;
+export default MessageList
