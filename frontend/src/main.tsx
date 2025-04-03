@@ -10,6 +10,7 @@ import MessageSellerPage from './pages/MessageSellerPage'
 import getDB from './api/localDB'
 import Auth from './pages/Auth'
 import Profile from './pages/ProfilePage'
+import MessageList from './pages/MessageList'
 
 getDB()
 
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
           ))}
           <Route path="/login" element={<Auth />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/messages" element={<MessageList />} />
         </Route>
         <Route path="/message-seller" element={<MessageSellerPage />}>
           <Route index element={<MessageSellerPage />} />
