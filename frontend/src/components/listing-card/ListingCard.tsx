@@ -26,6 +26,7 @@ export const CardContent: React.FC<{
 
 // Define props type
 interface ListingCardProps {
+  id: string
   image: string
   title: string
   description: string
