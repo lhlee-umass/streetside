@@ -127,7 +127,7 @@ const Home = () => {
       <h1 className="text-2xl sm:text-3xl font-bold text-center my-6 sm:my-8">
         Streetside Marketplace
       </h1>
-      <div className="flex justify-end px-4 mb-6">
+      <div className="flex justify-end px-4 mb-4 sm:mb-6">
         <Link to="/login">
           <button
             className="p-2 border rounded-md text-white"
@@ -140,8 +140,8 @@ const Home = () => {
 
       <div className="container mx-auto px-4">
         {/* Filters */}
-        <div className="bg-gray-100 p-4 rounded-lg mb-6">
-          <div className="flex gap-4 mb-4">
+        <div className="bg-gray-100 p-4 sm:p-6 rounded-lg mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <input
               type="text"
               placeholder="Search..."
@@ -189,7 +189,7 @@ const Home = () => {
         </div>
 
         {/* Grid layout for listings */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
           {filteredListings.map((listing, index) => (
             <ListingCard
               key={index}
