@@ -6,11 +6,12 @@ const ListingDetailsPage = () => {
   const listings = [
     {
       id: '1',
-      title: 'Modern Loft',
+      title: 'Sofa ',
       price: 2200,
       location: 'San Francisco, CA',
       description: 'Bright and spacious loft...',
-      image: 'https://your-image-url.jpg',
+      image:
+        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
       tags: ['Loft', 'Modern'],
       seller: {
         name: 'Jane Doe',
