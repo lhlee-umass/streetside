@@ -1,33 +1,38 @@
 import React, { useEffect, useState } from 'react'
-import { Users, Reviews } from '../api/api.ts'
-import ProfilePicture from '../components/profile/ProfilePicture'
-import UsernameHandle from '../components/profile/UsernameHandle'
-import RewardPoints from '../components/profile/RewardPoints'
-import ReviewTile from '../components/profile/ReviewTile'
-import VerificationBadge from '../components/profile/VerificationBadge'
+import { useParams } from 'react-router'
+import { Users, Reviews } from '../../api/api.ts'
+import ProfilePicture from '../../components/profile/ProfilePicture'
+import UsernameHandle from '../../components/profile/UsernameHandle'
+import RewardPoints from '../../components/profile/RewardPoints'
+import ReviewTile from '../../components/profile/ReviewTile'
+import VerificationBadge from '../../components/profile/VerificationBadge'
 import { User, Review } from 'src/api/types.ts'
-import StarRating from '../components/profile/StarRating.tsx'
+import StarRating from '../../components/profile/StarRating.tsx'
 
-const ProfilePage: React.FC = () => {
+const ViewProfile: React.FC = () => {
   const [profileData, setProfileData] = useState<User | null>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [averageRating, setAverageRating] = useState<number>(0)
 
+  // Use useParams to get the user ID from the URL
+  let { id } = useParams<{ id: string }>()
+  // If id is not provided, default to a specific user ID
+  if (!id) {
+    id = '01JQCMMJKJ65W5VBK5K17TQ2BF' // Default user ID
+    id = '' // Default user ID
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userData = await Users.getUser('01JQCMMJKJ65W5VBK5K17TQ2BF')
+        const userData = await Users.getUser(id)
         setProfileData(userData)
 
-        const reviewData = await Reviews.getReviewsForUser(
-          '01JQCMMJKJ65W5VBK5K17TQ2BF'
-        )
+        const reviewData = await Reviews.getReviewsForUser(id)
         setReviews(reviewData)
 
         // Calculate average rating
-        const avgReview = await Reviews.getAverageRatingForUser(
-          '01JQCMMJKJ65W5VBK5K17TQ2BF'
-        )
+        const avgReview = await Reviews.getAverageRatingForUser(id)
         setAverageRating(avgReview)
       } catch (error) {
         console.error('Failed to fetch data:', error)
@@ -35,7 +40,7 @@ const ProfilePage: React.FC = () => {
     }
 
     fetchData()
-  }, []) // Empty dependency array ensures this effect runs once
+  }, [id]) // Empty dependency array ensures this effect runs once
 
   if (!profileData) {
     return (
@@ -91,4 +96,4 @@ const ProfilePage: React.FC = () => {
   )
 }
 
-export default ProfilePage
+export default ViewProfile
