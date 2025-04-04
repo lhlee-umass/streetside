@@ -1,22 +1,31 @@
 import { MapPin, Tag, Heart } from 'lucide-react'
-import { Link } from 'react-router'
+import { Link, useParams } from 'react-router'
 
 const ListingDetailsPage = () => {
   // Placeholder listing data
-  const listing = {
-    image:
-      'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-    title: 'Modern Loft',
-    description:
-      'Bright and spacious loft with city views. Pet-friendly and walking distance to shops.',
-    price: 2200,
-    location: 'San Francisco, CA',
-    tags: ['Loft', 'Modern', 'Pet-Friendly'],
-    seller: {
-      name: 'Jane Doe',
-      joined: 'Feb 2024',
-      avatar: 'https://i.pravatar.cc/150?img=4',
+  const listings = [
+    {
+      id: '1',
+      title: 'Modern Loft',
+      price: 2200,
+      location: 'San Francisco, CA',
+      description: 'Bright and spacious loft...',
+      image: 'https://your-image-url.jpg',
+      tags: ['Loft', 'Modern'],
+      seller: {
+        name: 'Jane Doe',
+        avatar: 'https://i.pravatar.cc/150?img=4',
+        joined: 'Feb 2024',
+      },
     },
+    // ...more listings
+  ]
+
+  const { id } = useParams()
+  const listing = listings.find((l) => l.id === id)
+
+  if (!listing) {
+    return <p className="text-center text-gray-500 mt-10">Listing not found.</p>
   }
 
   return (
