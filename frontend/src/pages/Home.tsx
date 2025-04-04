@@ -7,6 +7,7 @@ const Home = () => {
   const listings = useMemo(
     () => [
       {
+        id: '0',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Cozy Apartment in the City',
@@ -16,6 +17,7 @@ const Home = () => {
         tags: ['Apartment', 'City Center'],
       },
       {
+        id: '1',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Beachfront Property',
@@ -25,6 +27,7 @@ const Home = () => {
         tags: ['House', 'Beachfront'],
       },
       {
+        id: '2',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Modern Loft',
@@ -35,6 +38,7 @@ const Home = () => {
         tags: ['Loft', 'Modern'],
       },
       {
+        id: '3',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Downtown Studio',
@@ -44,6 +48,7 @@ const Home = () => {
         tags: ['Studio', 'Downtown'],
       },
       {
+        id: '4',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Cozy Apartment in the City',
@@ -53,6 +58,7 @@ const Home = () => {
         tags: ['Apartment', 'City Center'],
       },
       {
+        id: '5',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Beachfront Property',
@@ -62,6 +68,7 @@ const Home = () => {
         tags: ['House', 'Beachfront'],
       },
       {
+        id: '6',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Modern Loft',
@@ -72,6 +79,7 @@ const Home = () => {
         tags: ['Loft', 'Modern'],
       },
       {
+        id: '7',
         image:
           'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
         title: 'Downtown Studio',
