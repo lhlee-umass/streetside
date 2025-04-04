@@ -6,9 +6,7 @@ const AuthNavigator: React.FC = () => {
   return (
     <Router>
       <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-900 p-6 text-white">
-        <h1 className="text-4xl font-bold mb-6">
-          Welcome to Streetside Marketplace
-        </h1>
+        <h1 className="text-4xl font-bold mb-6"></h1>
         <nav className="mb-6">
           <Link to="/login" className="text-blue-400 hover:underline mx-2">
             Login
