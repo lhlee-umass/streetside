@@ -38,6 +38,7 @@ interface ListingCardProps {
 }
 
 const ListingCard: React.FC<ListingCardProps> = ({
+  id,
   image,
   title,
   description,
@@ -87,9 +88,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
               <Heart size={20} />
             </button>
           )}
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            View Details
-          </button>
+          <Link to={`/listing/${id}`} className="w-full md:w-auto">
+            <button className="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              View Details
+            </button>
+          </Link>
 
           {/* Message Seller Button */}
           {onMessageSeller && (
