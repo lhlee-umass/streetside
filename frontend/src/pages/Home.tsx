@@ -1,34 +1,33 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router';
-import { Listings } from '../api/api.ts'; // Import Listings API
-import ListingCard from '../components/listing-card/ListingCard'; // Import the ListingCard component
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router'
+import { Listings } from '../api/api.ts' // Import Listings API
+import ListingCard from '../components/listing-card/ListingCard' // Import the ListingCard component
 import { Listing } from 'src/api/types.ts'
-
 
 const Home = () => {
   // State to store fetched listings
 
-  const [listings, setListings] = useState<Listing[]>([]); // Adjust the type based on your actual listing data structure
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [listings, setListings] = useState<Listing[]>([]) // Adjust the type based on your actual listing data structure
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
 
   // Fetch listings on component mount
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        setIsLoading(true);
-        const allListings = await Listings.getListings(); // Fetch all listings
-        setListings(allListings.slice(0, 8)); // Get the first 8 listings
+        setIsLoading(true)
+        const allListings = await Listings.getListings() // Fetch all listings
+        setListings(allListings.slice(0, 8)) // Get the first 8 listings
       } catch (err) {
-        setError('Failed to fetch listings.');
-        console.error(err);
+        setError('Failed to fetch listings.')
+        console.error(err)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
+    }
 
-    fetchListings();
-  }, []);
+    fetchListings()
+  }, [])
 
   // State for filter values
   const [filters, setFilters] = useState({
@@ -36,44 +35,46 @@ const Home = () => {
     category: '',
     minPrice: 0,
     maxPrice: 9999999,
-  });
+  })
 
   // State for filtered listings
-  const [filteredListings, setFilteredListings] = useState(listings);
+  const [filteredListings, setFilteredListings] = useState(listings)
 
   // Effect hook to apply filters
   useEffect(() => {
-    let updatedListings = [...listings];
+    let updatedListings = [...listings]
 
     // Search filter
     if (filters.searchTerm) {
       updatedListings = updatedListings.filter((listing) =>
         listing.title.toLowerCase().includes(filters.searchTerm.toLowerCase())
-      );
+      )
     }
 
     // Category filter
     if (filters.category) {
       updatedListings = updatedListings.filter((listing) =>
         listing.tags.includes(filters.category)
-      );
+      )
     }
 
     // Price filter
     updatedListings = updatedListings.filter(
       (listing) =>
         listing.price >= filters.minPrice && listing.price <= filters.maxPrice
-    );
+    )
 
-    setFilteredListings(updatedListings);
-  }, [filters, listings]);
+    setFilteredListings(updatedListings)
+  }, [filters, listings])
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error}</div>
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center my-8">Streetside Marketplace</h1>
+      <h1 className="text-3xl font-bold text-center my-8">
+        Streetside Marketplace
+      </h1>
       <div className="flex justify-end px-4 mb-6">
         <Link to="/login">
           <button
@@ -145,10 +146,14 @@ const Home = () => {
                 title={listing.title}
                 description={listing.description}
                 price={listing.price}
-                location={listing.location_lat.toString() + ", " + listing.location_long.toString()}
+                location={
+                  listing.location_lat.toString() +
+                  ', ' +
+                  listing.location_long.toString()
+                }
                 tags={listing.tags}
                 onFavorite={() => {
-                  console.log(`Favorite clicked for ${listing.title}`);
+                  console.log(`Favorite clicked for ${listing.title}`)
                 }}
                 onMessageSeller={() => {}}
               />
@@ -159,7 +164,7 @@ const Home = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
