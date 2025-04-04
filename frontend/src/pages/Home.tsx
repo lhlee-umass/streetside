@@ -124,7 +124,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center my-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-center my-6 sm:my-8">
         Streetside Marketplace
       </h1>
       <div className="flex justify-end px-4 mb-6">
