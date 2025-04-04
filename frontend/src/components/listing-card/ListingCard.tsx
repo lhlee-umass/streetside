@@ -47,7 +47,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onMessageSeller, // Accept onMessageSeller as prop
 }) => {
   return (
-    <Card className="w-full max-w-sm rounded-2xl shadow-lg hover:shadow-xl transition">
+    <Card className="w-full sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl rounded-2xl shadow-lg hover:shadow-xl transition">
       <img
         src={image}
         alt={title}
