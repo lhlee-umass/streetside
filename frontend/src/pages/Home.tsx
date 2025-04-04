@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
 import { Listings } from '../api/api.ts'; // Import Listings API
 import ListingCard from '../components/listing-card/ListingCard'; // Import the ListingCard component
+import { Listing } from 'src/api/types.ts'
+
 
 const Home = () => {
   // State to store fetched listings
-  const [listings, setListings] = useState<any[]>([]); // Adjust the type based on your actual listing data structure
+
+  const [listings, setListings] = useState<Listing[]>([]); // Adjust the type based on your actual listing data structure
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -142,7 +145,7 @@ const Home = () => {
                 title={listing.title}
                 description={listing.description}
                 price={listing.price}
-                location={listing.location}
+                location={listing.location_lat.toString() + ", " + listing.location_long.toString()}
                 tags={listing.tags}
                 onFavorite={() => {
                   console.log(`Favorite clicked for ${listing.title}`);
