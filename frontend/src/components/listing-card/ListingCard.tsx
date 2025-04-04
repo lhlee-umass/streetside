@@ -84,7 +84,6 @@ const ListingCard: React.FC<ListingCardProps> = ({
               className="text-gray-500 hover:text-red-500"
             >
               {' '}
-              .
               <Heart size={20} />
             </button>
           )}
