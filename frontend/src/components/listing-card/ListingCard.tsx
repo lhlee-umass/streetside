@@ -77,23 +77,26 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </div>
         )}
 
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 mt-4">
           {onFavorite && (
             <button
               onClick={onFavorite}
               className="text-gray-500 hover:text-red-500"
             >
+              {' '}
+              .
               <Heart size={20} />
             </button>
           )}
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-            View Details
+          <button className="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            {' '}
+            View Details{' '}
           </button>
 
           {/* Message Seller Button */}
           {onMessageSeller && (
             <Link to="/message-seller">
-              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              <button className="w-full md:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 Message Seller
               </button>
             </Link>
