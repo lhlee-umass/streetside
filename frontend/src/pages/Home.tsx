@@ -139,9 +139,9 @@ const Home = () => {
         {/* Grid layout for listings */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
           {filteredListings.length > 0 ? (
-            filteredListings.map((listing, index) => (
+            filteredListings.map((listing) => (
               <ListingCard
-                key={index}
+                id={listing.listing_id}
                 image={listing.images[0]}
                 title={listing.title}
                 description={listing.description}
