@@ -17,7 +17,7 @@ export default function BottomBar() {
           className="flex flex-col items-center hover:text-green-200"
         >
           <FiShoppingCart className="w-6 h-6" />
-          <span className="text-xs mt-1">Cart</span>
+          <span className="text-xs mt-1">Shopping Cart</span>
         </Link>
         <Link
           to="/map"
