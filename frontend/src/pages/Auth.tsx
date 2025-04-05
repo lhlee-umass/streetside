@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router'
 import React, { useState } from 'react'
+import { Auth } from '../api/api'
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true)
@@ -37,16 +38,26 @@ const AuthPage: React.FC = () => {
       return
     }
 
+    if (isLogin) {
+      Auth.login(formData.email).then((user) => {
+        if (!user) {
+          setError('User not found.')
+          return
+        }
+        setSuccess('Login successful! Logging you in...')
+        setTimeout(() => {
+          navigate('/')
+        }, 1000)
+      })
+      return
+    }
+
     setSuccess(
       isLogin
         ? 'Login successful! Logging you in...'
         : 'Sign up successful! Logging you in...'
     )
     console.log(isLogin ? 'Logging in...' : 'Signing up...')
-
-    setTimeout(() => {
-      navigate('/')
-    }, 1000)
   }
 
   return (

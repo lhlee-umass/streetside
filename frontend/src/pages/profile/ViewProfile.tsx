@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-import { Users, Reviews } from '../../api/api.ts'
+import { useParams, useNavigate } from 'react-router'
+import { Users, Reviews, Auth } from '../../api/api.ts'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import UsernameHandle from '../../components/profile/UsernameHandle'
 import RewardPoints from '../../components/profile/RewardPoints'
@@ -14,33 +14,51 @@ const ViewProfile: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([])
   const [averageRating, setAverageRating] = useState<number>(0)
 
-  // Use useParams to get the user ID from the URL
-  let { id } = useParams<{ id: string }>()
-  // If id is not provided, default to a specific user ID
-  if (!id) {
-    id = '01JQCMMJKJ65W5VBK5K17TQ2BF' // Default user ID
-    id = '' // Default user ID
-  }
+  const navigate = useNavigate()
 
+  // Use useParams to get the user ID from the URL
+  const { id } = useParams<{ id: string }>()
+  // If id is not provided, default to a specific user ID
+  // if (!id) {
+  //   id = '01JQCMMJKJ65W5VBK5K17TQ2BF' // Default user ID
+  //   id = '' // Default user ID
+  // }
+
+  // redirect to login if user not logged in and viewing their own profile
   useEffect(() => {
-    const fetchData = async () => {
+    const initializeProfile = async () => {
       try {
-        const userData = await Users.getUser(id)
+        const user = await Auth.getCurrentUser()
+
+        console.log('Current user:', user)
+        console.log('Profile ID:', id)
+
+        if (!user && !id) {
+          navigate('/login')
+          return
+        }
+
+        const userData = id ? await Users.getUser(id) : user
         setProfileData(userData)
 
-        const reviewData = await Reviews.getReviewsForUser(id)
+        const reviewData = await Reviews.getReviewsForUser(
+          id || userData!.user_id
+        )
         setReviews(reviewData)
 
         // Calculate average rating
-        const avgReview = await Reviews.getAverageRatingForUser(id)
+        const avgReview = await Reviews.getAverageRatingForUser(
+          id || userData!.user_id
+        )
         setAverageRating(avgReview)
       } catch (error) {
         console.error('Failed to fetch data:', error)
+        navigate('/') // Redirect to homepage on failure
       }
     }
 
-    fetchData()
-  }, [id]) // Empty dependency array ensures this effect runs once
+    initializeProfile()
+  }, [id, navigate])
 
   if (!profileData) {
     return (
