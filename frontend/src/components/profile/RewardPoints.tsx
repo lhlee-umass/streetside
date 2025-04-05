@@ -10,16 +10,12 @@ const RewardPoints: React.FC<RewardPointsProps> = ({
   displayText = true,
 }) => {
   return (
-    <div className="reward-points">
+    <div className="reward-points flex items-center space-x-2">
       {displayText && <h3></h3>}
-      <span
-        role="img"
-        aria-label="gold-coin"
-        style={{ fontSize: '1.5em', marginRight: '5px' }}
-      >
+      <span className="text-lg">{points}</span>
+      <span role="img" aria-label="gold-coin" className="text-lg">
         🪙
       </span>
-      <span>{points}</span>
     </div>
   )
 }

@@ -69,9 +69,9 @@ const ViewProfile: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-y-auto bg-gray-700 p-5">
-      {/* Profile Header */}
-      <div className="profile-header mb-5 flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start space-y-6 md:space-y-0 md:space-x-6">
+    <div className="flex flex-col p-5 items-center">
+      {/* Profile Card */}
+      <div className="profile-card w-full max-w-4xl p-8 rounded-lg bg-gray-900 bg-opacity-50 shadow-lg flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-6">
         <div className="flex-shrink-0">
           <ProfilePicture
             imageUrl={profileData.profile_img}
@@ -79,35 +79,44 @@ const ViewProfile: React.FC = () => {
             size={250}
           />
         </div>
-        <div className="flex-grow space-y-5 text-center md:text-left text-lg">
+        <div className="flex-grow space-y-5 text-left text-lg">
           <div className="space-y-5">
-            <UsernameHandle
-              username={profileData.username}
-              isVerified={profileData.verifications.length > 0}
-            />
+            <div className="text-lg font-bold text-white flex items-center">
+              <UsernameHandle
+                username={profileData.username}
+                isVerified={profileData.verifications.length > 0}
+              />
+            </div>
             <VerificationBadge verifications={profileData.verifications} />
             {/* Average Rating */}
-            <div className="text-lg font-bold text-white">
-              <h3>Average Rating:</h3>
-              <div className="flex items-center justify-center md:justify-start">
+            <div className="text-lg font-bold text-white flex items-center">
+              <div className="flex items-center justify-center p-4 rounded-md bg-amber-500/50 w-fit">
+                <span className="mr-2">{averageRating}</span>
                 <StarRating rating={averageRating} totalStars={5} />
-                <span className="ml-2">({averageRating} / 5)</span>
+                <span className="ml-2">({reviews.length})</span>
               </div>
             </div>
-            <RewardPoints points={profileData.reward_points} />
+            <div className="text-lg font-bold text-white flex items-center">
+              <span className="mr-2">Reward Points: </span>
+              <RewardPoints points={profileData.reward_points} />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Reviews Section */}
-      <div className="reviews-section mt-8 flex-grow overflow-y-auto pb-5">
-        <h2 className="text-3xl font-semibold text-white mb-8">User Reviews</h2>
+      <div className="reviews-section mt-8 pb-5 w-full">
+        <h2 className="text-3xl font-semibold text-white mb-8 text-center">
+          User Reviews
+        </h2>
         {reviews.length > 0 ? (
           reviews.map((review: Review, index: number) => (
             <ReviewTile key={index} review={review} />
           ))
         ) : (
-          <div className="text-lg text-gray-400">No reviews available.</div>
+          <div className="text-lg text-gray-400 text-center">
+            No reviews available.
+          </div>
         )}
       </div>
     </div>

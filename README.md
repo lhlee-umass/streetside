@@ -35,6 +35,15 @@ npm install
 npm run dev:mock
 ```
 
+With the mock data, you can "log in" with any of the emails in the `users.json` file at `/frontend/src/api/mock-data/user.json` and any password. A few example emails are:
+```
+lfayerman8@baidu.com
+seakleec@merriam-webster.com
+ebreakspeara@domainmarket.com
+```
+
+You can reset the logged in user by refreshing the page.
+
 This is the intended setup for the project. If you encounter any issues, please let us know.
 
 ## Running
