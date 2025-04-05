@@ -1,45 +1,61 @@
 import { MapPin, Tag, Heart } from 'lucide-react'
-import { Link, useParams } from 'react-router'
+import { Link, useParams } from 'react-router' // Corrected import to use react-router-dom
+import { useState, useEffect } from 'react'
+import { Listings } from '../api/api.ts' // Import Listings API
+import { Listing } from 'src/api/types.ts'
 
 const ListingDetailsPage = () => {
-  // Placeholder listing data
-  const listings = [
-    {
-      id: '1',
-      title: 'Sofa ',
-      price: 2200,
-      location: 'San Francisco, CA',
-      description: 'Bright and spacious loft...',
-      image:
-        'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-      tags: ['Loft', 'Modern'],
-      seller: {
-        name: 'Jane Doe',
-        avatar: 'https://i.pravatar.cc/150?img=4',
-        joined: 'Feb 2024',
-      },
-    },
-    // ...more listings
-  ]
+  const [listing, setListing] = useState<Listing | null >(null) 
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  const { id } = useParams()
-  const listing = listings.find((l) => l.id === id)
+  const { id } = useParams() // Get the listing ID from the URL
 
-  if (!listing) {
-    return <p className="text-center text-gray-500 mt-10">Listing not found.</p>
-  }
+  useEffect(() => {
+    const fetchListing = async () => {
+      if (!id) {
+        setError('Listing ID is missing');
+        setIsLoading(false);
+        return;
+      }
+  
+      try {
+        setIsLoading(true);
+        const fetchedListing = await Listings.getListing(id); // Now `id` is guaranteed to be a string
+        setListing(fetchedListing);
+      } catch (err) {
+        setError('Failed to fetch the listing.');
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchListing();
+  }, [id]);
+  
+
+  // Handle loading and error states
+  if (isLoading) return <p className="text-center text-gray-500 mt-10">Loading...</p>
+  if (error) return <p className="text-center text-red-500 mt-10">{error}</p>
+  if (!listing) return <p className="text-center text-gray-500 mt-10">Listing not found.</p>
 
   return (
     <div className="container mx-auto px-4 py-6">
       {/* Desktop grid, stacked on mobile */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left side: Image */}
+        {/* Left side: Images */}
         <div className="lg:col-span-2">
-          <img
-            src={listing.image}
-            alt={listing.title}
-            className="w-full aspect-video object-cover rounded-xl shadow"
-          />
+          {/* Loop through images array */}
+          {listing.images && listing.images.length > 0 ? (
+            <img
+              src={listing.images[0]} // Display the first image for now (you can extend this for a gallery)
+              alt={listing.title}
+              className="w-full aspect-video object-cover rounded-xl shadow"
+            />
+          ) : (
+            <p>No images available</p>
+          )}
         </div>
 
         {/* Right side: Details */}
@@ -52,13 +68,13 @@ const ListingDetailsPage = () => {
             </p>
             <div className="flex items-center gap-2 text-sm text-gray-500">
               <MapPin size={16} />
-              <span>{listing.location}</span>
+              <span>{listing.location_name}</span> {/* Display location name */}
             </div>
           </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {listing.tags.map((tag, index) => (
+            {listing.tags.map((tag: string, index: number) => (
               <span
                 key={index}
                 className="flex items-center gap-1 bg-gray-200 text-gray-700 text-xs px-3 py-1 rounded-full"
@@ -79,14 +95,14 @@ const ListingDetailsPage = () => {
           <div className="border rounded-lg p-4 bg-white shadow-sm">
             <div className="flex items-center gap-4">
               <img
-                src={listing.seller.avatar}
-                alt={listing.seller.name}
+                src={listing.seller_id} // Assuming 'seller' object exists
+                alt={listing.seller_id} // Assuming 'seller' object exists
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div>
-                <p className="font-semibold">{listing.seller.name}</p>
+                <p className="font-semibold">{listing.seller_id}</p>
                 <p className="text-sm text-gray-500">
-                  Joined {listing.seller.joined}
+                  Joined {listing.seller_id} {/* Assuming seller's 'joined' date */}
                 </p>
               </div>
             </div>
