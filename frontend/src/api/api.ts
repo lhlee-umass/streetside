@@ -22,7 +22,8 @@ let curUser: User | null = null
 
 export const Auth: AuthAPI = {
   async login(email) {
-    return (await usersDB.getAll()).filter((user) => user.email === email)[0]
+    curUser = (await usersDB.getAll()).filter((user) => user.email === email)[0]
+    return curUser
   },
   async logout() {
     curUser = null
@@ -36,6 +37,9 @@ export const Auth: AuthAPI = {
     }
     await usersDB.create(newUser)
     curUser = newUser
+    return curUser
+  },
+  async getCurrentUser() {
     return curUser
   },
 }

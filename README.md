@@ -26,16 +26,23 @@ This app targets individuals with low-income, eco-conscious consumers, and peopl
 With your node version set to 22.14.0 (as specified in `.nvmrc`), run:
 ```bash
 npm install
-npm install react-icons
 npm run dev
 ```
 
 In order to run with mock data, you will need to run with a slightly modified `dev:mock` command to initialize the "backend" (IndexedDB) with mock data:
 ```bash
 npm install
-npm install react-icons
 npm run dev:mock
 ```
+
+With the mock data, you can "log in" with any of the emails in the `users.json` file at `/frontend/src/api/mock-data/user.json` and any password. A few example emails are:
+```
+lfayerman8@baidu.com
+seakleec@merriam-webster.com
+ebreakspeara@domainmarket.com
+```
+
+You can reset the logged in user by refreshing the page.
 
 This is the intended setup for the project. If you encounter any issues, please let us know.
 

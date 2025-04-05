@@ -9,7 +9,8 @@ import { pages } from './utils/pages'
 import MessageSellerPage from './pages/MessageSellerPage'
 import getDB from './api/localDB'
 import Auth from './pages/Auth'
-import Profile from './pages/ProfilePage'
+import ViewProfile from './pages/profile/ViewProfile'
+// import EditProfile from './pages/profile/EditProfile'
 import MessageList from './pages/MessageList'
 import ListingDetailsPage from './pages/ListingDetailsPage'
 
@@ -29,12 +30,14 @@ createRoot(document.getElementById('root')!).render(
           <Route path="*" element={<NotFoundPage />} />
           <Route path="/messages" element={<MessageList />} />
           <Route path="/listing/:id" element={<ListingDetailsPage />} />
-        </Route>
-        <Route path="/message-seller" element={<MessageSellerPage />}>
-          <Route index element={<MessageSellerPage />} />
-        </Route>
-        <Route path="/profile" element={<Profile />}>
-          <Route index element={<Profile />} />
+          <Route path="/message-seller" element={<MessageSellerPage />}>
+            <Route index element={<MessageSellerPage />} />
+          </Route>
+          <Route path="/profile">
+            <Route index element={<ViewProfile />} />
+            <Route path=":id" element={<ViewProfile />} />
+            {/* <Route path="edit" element={<EditProfile />} /> */}
+          </Route>
         </Route>
       </Routes>
     </StrictMode>

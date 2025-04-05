@@ -86,6 +86,7 @@ export interface AuthAPI {
   login(email: string): Promise<User>
   logout(): Promise<void>
   register(user: User): Promise<User>
+  getCurrentUser(): Promise<User | null>
 }
 
 export interface UsersAPI {

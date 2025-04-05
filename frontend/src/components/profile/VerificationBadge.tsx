@@ -11,7 +11,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
     <div
       className={`${
         verifications.length > 0 ? 'bg-green-500 py-1' : 'bg-red-500 py-3'
-      } px-3 rounded-md inline-block font-semibold text-white flex items-center justify-center`}
+      } px-3 rounded-md inline-block font-semibold text-white items-center justify-center`}
     >
       {verifications.length > 0 ? (
         <div>
