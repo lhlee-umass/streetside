@@ -1,88 +1,33 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router'
+import { Listings } from '../api/api.ts' // Import Listings API
 import ListingCard from '../components/listing-card/ListingCard' // Import the ListingCard component
+import { Listing } from 'src/api/types.ts'
 
 const Home = () => {
-  // Sample listing data
-  const listings = useMemo(
-    () => [
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Cozy Apartment in the City',
-        description: 'A beautiful apartment with all the amenities you need.',
-        price: 1200,
-        location: 'New York, NY',
-        tags: ['Apartment', 'City Center'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Beachfront Property',
-        description: 'Luxurious beachfront property with stunning views.',
-        price: 3500,
-        location: 'Malibu, CA',
-        tags: ['House', 'Beachfront'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Modern Loft',
-        description:
-          'Spacious modern loft with open floor plan and city views.',
-        price: 2200,
-        location: 'San Francisco, CA',
-        tags: ['Loft', 'Modern'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Downtown Studio',
-        description: 'Compact studio in the heart of downtown.',
-        price: 900,
-        location: 'Austin, TX',
-        tags: ['Studio', 'Downtown'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Cozy Apartment in the City',
-        description: 'A beautiful apartment with all the amenities you need.',
-        price: 1200,
-        location: 'New York, NY',
-        tags: ['Apartment', 'City Center'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Beachfront Property',
-        description: 'Luxurious beachfront property with stunning views.',
-        price: 3500,
-        location: 'Malibu, CA',
-        tags: ['House', 'Beachfront'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Modern Loft',
-        description:
-          'Spacious modern loft with open floor plan and city views.',
-        price: 2200,
-        location: 'San Francisco, CA',
-        tags: ['Loft', 'Modern'],
-      },
-      {
-        image:
-          'https://www.realsimple.com/thmb/VK1y5TimKbELKfodjoed1yiIBYg=/fit-in/1500x1000/filters:no_upscale():max_bytes(150000):strip_icc()/Room-Board-Metro-Two-Cushion-Sofa-f945b411d3264c67ab3ec563a9c4c559.jpg',
-        title: 'Downtown Studio',
-        description: 'Compact studio in the heart of downtown.',
-        price: 900,
-        location: 'Austin, TX',
-        tags: ['Studio', 'Downtown'],
-      },
-    ],
-    []
-  )
+  // State to store fetched listings
+
+  const [listings, setListings] = useState<Listing[]>([]) // Adjust the type based on your actual listing data structure
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Fetch listings on component mount
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        setIsLoading(true)
+        const allListings = await Listings.getListings() // Fetch all listings
+        setListings(allListings.slice(0, 8)) // Get the first 8 listings
+      } catch (err) {
+        setError('Failed to fetch listings.')
+        console.error(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchListings()
+  }, [])
 
   // State for filter values
   const [filters, setFilters] = useState({
@@ -122,6 +67,9 @@ const Home = () => {
     setFilteredListings(updatedListings)
   }, [filters, listings])
 
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error}</div>
+
   return (
     <>
       <h1 className="text-2xl sm:text-3xl font-bold text-center my-6 sm:my-8">
@@ -159,10 +107,10 @@ const Home = () => {
               className="p-2 border rounded-md text-black"
             >
               <option value="">All Categories</option>
-              <option value="Apartment">Apartment</option>
-              <option value="House">House</option>
-              <option value="Studio">Studio</option>
-              <option value="Loft">Loft</option>
+              <option value="Home Decor">Home Decor</option>
+              <option value="Sporting Goods">Sporting Goods</option>
+              <option value="Jewelry">Jewelry</option>
+              <option value="Furniture">Furniture</option>
             </select>
             <input
               type="number"
@@ -190,21 +138,29 @@ const Home = () => {
 
         {/* Grid layout for listings */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
-          {filteredListings.map((listing, index) => (
-            <ListingCard
-              key={index}
-              image={listing.image}
-              title={listing.title}
-              description={listing.description}
-              price={listing.price}
-              location={listing.location}
-              tags={listing.tags}
-              onFavorite={() => {
-                console.log(`Favorite clicked for ${listing.title}`)
-              }}
-              onMessageSeller={() => {}}
-            />
-          ))}
+          {filteredListings.length > 0 ? (
+            filteredListings.map((listing, index) => (
+              <ListingCard
+                key={index}
+                image={listing.images[0]}
+                title={listing.title}
+                description={listing.description}
+                price={listing.price}
+                location={
+                  listing.location_lat.toString() +
+                  ', ' +
+                  listing.location_long.toString()
+                }
+                tags={listing.tags}
+                onFavorite={() => {
+                  console.log(`Favorite clicked for ${listing.title}`)
+                }}
+                onMessageSeller={() => {}}
+              />
+            ))
+          ) : (
+            <p>No listings available.</p>
+          )}
         </div>
       </div>
     </>
