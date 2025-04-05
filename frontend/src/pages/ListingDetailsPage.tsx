@@ -5,7 +5,7 @@ import { Listings } from '../api/api.ts' // Import Listings API
 import { Listing } from 'src/api/types.ts'
 
 const ListingDetailsPage = () => {
-  const [listing, setListing] = useState<Listing | null >(null) 
+  const [listing, setListing] = useState<Listing | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -14,31 +14,32 @@ const ListingDetailsPage = () => {
   useEffect(() => {
     const fetchListing = async () => {
       if (!id) {
-        setError('Listing ID is missing');
-        setIsLoading(false);
-        return;
+        setError('Listing ID is missing')
+        setIsLoading(false)
+        return
       }
-  
+
       try {
-        setIsLoading(true);
-        const fetchedListing = await Listings.getListing(id); // Now `id` is guaranteed to be a string
-        setListing(fetchedListing);
+        setIsLoading(true)
+        const fetchedListing = await Listings.getListing(id) // Now `id` is guaranteed to be a string
+        setListing(fetchedListing)
       } catch (err) {
-        setError('Failed to fetch the listing.');
-        console.error(err);
+        setError('Failed to fetch the listing.')
+        console.error(err)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
-  
-    fetchListing();
-  }, [id]);
-  
+    }
+
+    fetchListing()
+  }, [id])
 
   // Handle loading and error states
-  if (isLoading) return <p className="text-center text-gray-500 mt-10">Loading...</p>
+  if (isLoading)
+    return <p className="text-center text-gray-500 mt-10">Loading...</p>
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>
-  if (!listing) return <p className="text-center text-gray-500 mt-10">Listing not found.</p>
+  if (!listing)
+    return <p className="text-center text-gray-500 mt-10">Listing not found.</p>
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -102,7 +103,8 @@ const ListingDetailsPage = () => {
               <div>
                 <p className="font-semibold">{listing.seller_id}</p>
                 <p className="text-sm text-gray-500">
-                  Joined {listing.seller_id} {/* Assuming seller's 'joined' date */}
+                  Joined {listing.seller_id}{' '}
+                  {/* Assuming seller's 'joined' date */}
                 </p>
               </div>
             </div>

@@ -146,14 +146,17 @@ const Home = () => {
                 title={listing.title}
                 description={listing.description}
                 price={listing.price}
-                location={listing.location_lat.toString() +
+                location={
+                  listing.location_lat.toString() +
                   ', ' +
-                  listing.location_long.toString()}
+                  listing.location_long.toString()
+                }
                 tags={listing.tags}
                 onFavorite={() => {
                   console.log(`Favorite clicked for ${listing.title}`)
-                } }
-                onMessageSeller={() => { } }              />
+                }}
+                onMessageSeller={() => {}}
+              />
             ))
           ) : (
             <p>No listings available.</p>
