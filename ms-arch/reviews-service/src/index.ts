@@ -1,51 +1,51 @@
-import express, { Request, Response } from "express";
-import { pino } from "pino";
-import { v4 as uuidv4 } from "uuid";
+import express, { Request, Response } from 'express'
+import { pino } from 'pino'
+import { v4 as uuidv4 } from 'uuid'
 
-const PORT = 3000;
+const PORT = 3000
 
-const log = pino({ transport: { target: "pino-pretty" } });
-const app = express();
-app.use(express.json());
+const log = pino({ transport: { target: 'pino-pretty' } })
+const app = express()
+app.use(express.json())
 
 // Define the Review type
 interface Review {
-  id: string;
-  reviewer_id: string;
-  reviewee_id: string;
-  rating: number;
-  message: string;
-  created_at: number;
+  id: string
+  reviewer_id: string
+  reviewee_id: string
+  rating: number
+  message: string
+  created_at: number
 }
 
 // In-memory "database" for reviews
-const reviews: Review[] = [];
+const reviews: Review[] = []
 
 // Get all reviews
-app.get("/", (req: Request, res: Response) => {
-  res.json(reviews);
-});
+app.get('/', (req: Request, res: Response) => {
+  res.json(reviews)
+})
 
 // Get reviews by reviewer_id
-app.get("/:reviewer_id", (req: Request, res: Response) => {
-  const { reviewer_id } = req.params;
+app.get('/:reviewer_id', (req: Request, res: Response) => {
+  const { reviewer_id } = req.params
   const reviewerReviews = reviews.filter(
     (review) => review.reviewer_id === reviewer_id
-  );
-  res.json(reviewerReviews);
-});
+  )
+  res.json(reviewerReviews)
+})
 
 // Create a new review
-app.post("/", (req: Request, res: Response) => {
-  const { reviewer_id, reviewee_id, rating, message }: Review = req.body;
+app.post('/', (req: Request, res: Response) => {
+  const { reviewer_id, reviewee_id, rating, message }: Review = req.body
 
   // Validate the incoming data
   if (!reviewer_id || !reviewee_id || rating == null || !message) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(400).json({ error: 'Missing required fields' })
   }
 
   if (rating < 1 || rating > 5) {
-    return res.status(400).json({ error: "Rating must be between 1 and 5" });
+    return res.status(400).json({ error: 'Rating must be between 1 and 5' })
   }
 
   // Create a new review and add it to the "database"
@@ -56,47 +56,47 @@ app.post("/", (req: Request, res: Response) => {
     rating,
     message,
     created_at: Math.floor(Date.now() / 1000), // Epoch timestamp
-  };
+  }
 
-  reviews.push(newReview);
-  res.status(201).json(newReview);
-});
+  reviews.push(newReview)
+  res.status(201).json(newReview)
+})
 
 // Update an existing review
-app.put("/:review_id", (req: Request, res: Response) => {
-  const { review_id } = req.params;
-  const { rating, message }: Partial<Review> = req.body;
+app.put('/:review_id', (req: Request, res: Response) => {
+  const { review_id } = req.params
+  const { rating, message }: Partial<Review> = req.body
 
   // Find the review to update
-  const reviewIndex = reviews.findIndex((review) => review.id === review_id);
+  const reviewIndex = reviews.findIndex((review) => review.id === review_id)
   if (reviewIndex === -1) {
-    return res.status(404).json({ error: "Review not found" });
+    return res.status(404).json({ error: 'Review not found' })
   }
 
   // Update the review
-  if (rating != null) reviews[reviewIndex].rating = rating;
-  if (message != null) reviews[reviewIndex].message = message;
+  if (rating != null) reviews[reviewIndex].rating = rating
+  if (message != null) reviews[reviewIndex].message = message
 
-  res.json(reviews[reviewIndex]);
-});
+  res.json(reviews[reviewIndex])
+})
 
 // Delete a review
-app.delete("/:review_id", (req: Request, res: Response) => {
-  const { review_id } = req.params;
+app.delete('/:review_id', (req: Request, res: Response) => {
+  const { review_id } = req.params
 
   // Find the review to delete
-  const reviewIndex = reviews.findIndex((review) => review.id === review_id);
+  const reviewIndex = reviews.findIndex((review) => review.id === review_id)
   if (reviewIndex === -1) {
-    return res.status(404).json({ error: "Review not found" });
+    return res.status(404).json({ error: 'Review not found' })
   }
 
   // Remove the review from the array
-  reviews.splice(reviewIndex, 1);
+  reviews.splice(reviewIndex, 1)
 
-  res.status(204).send(); // No content to return
-});
+  res.status(204).send() // No content to return
+})
 
 // Start the server
 app.listen(PORT, () => {
-  log.info(`Reviews service running on port ${PORT}`);
-});
+  log.info(`Reviews service running on port ${PORT}`)
+})
