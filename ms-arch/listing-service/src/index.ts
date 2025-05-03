@@ -2,14 +2,26 @@ import express, { Request, Response } from "express";
 import { pino } from "pino";
 import { v4 as uuidv4 } from "uuid";
 
-const PORT = 3000; 
+const PORT = 3000;
 
 const log = pino({ transport: { target: "pino-pretty" } });
 const app = express();
 app.use(express.json());
 
+// Define the Listing type
+interface Listing {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  location: string;
+  price: number;
+  tags: string[];
+  userId: string;
+}
+
 // Simple in-memory "database"
-const listings: any[] = [];
+const listings: Listing[] = [];
 
 // Get all listings
 app.get("/", (req: Request, res: Response) => {
@@ -26,7 +38,7 @@ app.post("/", (req: Request, res: Response) => {
   }
 
   // Create a new listing and add to the "database"
-  const newListing = {
+  const newListing: Listing = {
     id: uuidv4(),
     title,
     description,

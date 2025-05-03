@@ -8,10 +8,20 @@ const log = pino({ transport: { target: "pino-pretty" } });
 const app = express();
 app.use(express.json());
 
-// In-memory "database" for reviews
-const reviews: any[] = [];
+// Define the Review type
+interface Review {
+  id: string;
+  reviewer_id: string;
+  reviewee_id: string;
+  rating: number;
+  message: string;
+  created_at: number;
+}
 
-// Get all reviews (this could be filtered by a reviewer_id or other parameters)
+// In-memory "database" for reviews
+const reviews: Review[] = [];
+
+// Get all reviews
 app.get("/", (req: Request, res: Response) => {
   res.json(reviews);
 });
@@ -27,7 +37,7 @@ app.get("/:reviewer_id", (req: Request, res: Response) => {
 
 // Create a new review
 app.post("/", (req: Request, res: Response) => {
-  const { reviewer_id, reviewee_id, rating, message } = req.body;
+  const { reviewer_id, reviewee_id, rating, message }: Review = req.body;
 
   // Validate the incoming data
   if (!reviewer_id || !reviewee_id || rating == null || !message) {
@@ -39,7 +49,7 @@ app.post("/", (req: Request, res: Response) => {
   }
 
   // Create a new review and add it to the "database"
-  const newReview = {
+  const newReview: Review = {
     id: uuidv4(),
     reviewer_id,
     reviewee_id,
@@ -55,7 +65,7 @@ app.post("/", (req: Request, res: Response) => {
 // Update an existing review
 app.put("/:review_id", (req: Request, res: Response) => {
   const { review_id } = req.params;
-  const { rating, message } = req.body;
+  const { rating, message }: Partial<Review> = req.body;
 
   // Find the review to update
   const reviewIndex = reviews.findIndex((review) => review.id === review_id);
@@ -65,7 +75,7 @@ app.put("/:review_id", (req: Request, res: Response) => {
 
   // Update the review
   if (rating != null) reviews[reviewIndex].rating = rating;
-  if (message) reviews[reviewIndex].message = message;
+  if (message != null) reviews[reviewIndex].message = message;
 
   res.json(reviews[reviewIndex]);
 });
@@ -73,7 +83,7 @@ app.put("/:review_id", (req: Request, res: Response) => {
 // Delete a review
 app.delete("/:review_id", (req: Request, res: Response) => {
   const { review_id } = req.params;
-  
+
   // Find the review to delete
   const reviewIndex = reviews.findIndex((review) => review.id === review_id);
   if (reviewIndex === -1) {
@@ -82,7 +92,7 @@ app.delete("/:review_id", (req: Request, res: Response) => {
 
   // Remove the review from the array
   reviews.splice(reviewIndex, 1);
-  
+
   res.status(204).send(); // No content to return
 });
 
