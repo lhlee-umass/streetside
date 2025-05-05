@@ -3,8 +3,8 @@ import React from 'react'
 
 // Define the props for the MessageBubble component
 interface MessageBubbleProps {
-  sender: 'user' | 'seller'  // Indicates who sent the message
-  text: string               // The message content
+  sender: 'user' | 'seller' // Indicates who sent the message
+  text: string // The message content
 }
 
 // Functional component to render a message bubble based on sender
@@ -21,11 +21,11 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       <div
         className={`max-w-xs p-4 rounded-lg text-lg ${
           sender === 'user'
-            ? 'bg-blue-500 text-white'  // User messages: blue background, white text
-            : 'bg-gray-300 text-black'  // Seller messages: gray background, black text
+            ? 'bg-blue-500 text-white' // User messages: blue background, white text
+            : 'bg-gray-300 text-black' // Seller messages: gray background, black text
         }`}
       >
-        {text}  {/* Render the actual message text */}
+        {text} {/* Render the actual message text */}
       </div>
     </div>
   )

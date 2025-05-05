@@ -10,14 +10,13 @@ export default function BottomBar() {
     // Fixed navigation bar at the bottom of the screen with styling
     <nav className="fixed bottom-0 left-0 right-0 bg-green-700 text-white p-3 shadow-lg z-10">
       <div className="container mx-auto flex justify-around items-center">
-        
         {/* Link to the filter page with icon and label */}
         <Link
           to="/filter"
           className="flex flex-col items-center hover:text-green-200"
         >
-          <FiFilter className="w-6 h-6" />                {/* Filter icon */}
-          <span className="text-xs mt-1">Filter</span>     {/* Label */}
+          <FiFilter className="w-6 h-6" /> {/* Filter icon */}
+          <span className="text-xs mt-1">Filter</span> {/* Label */}
         </Link>
 
         {/* Link to the shopping cart page */}
@@ -25,7 +24,7 @@ export default function BottomBar() {
           to="/cart"
           className="flex flex-col items-center hover:text-green-200"
         >
-          <FiShoppingCart className="w-6 h-6" />           {/* Cart icon */}
+          <FiShoppingCart className="w-6 h-6" /> {/* Cart icon */}
           <span className="text-xs mt-1">Shopping Cart</span>
         </Link>
 
@@ -34,8 +33,8 @@ export default function BottomBar() {
           to="/map"
           className="flex flex-col items-center hover:text-green-200"
         >
-          <FiMap className="w-6 h-6" />                    {/* Map icon */}
-          <span className="text-xs mt-1">Local</span>      {/* Label */}
+          <FiMap className="w-6 h-6" /> {/* Map icon */}
+          <span className="text-xs mt-1">Local</span> {/* Label */}
         </Link>
 
         {/* Link to the community page */}
@@ -43,10 +42,9 @@ export default function BottomBar() {
           to="/community"
           className="flex flex-col items-center hover:text-green-200"
         >
-          <FiUsers className="w-6 h-6" />                  {/* Users/community icon */}
+          <FiUsers className="w-6 h-6" /> {/* Users/community icon */}
           <span className="text-xs mt-1">Community</span>
         </Link>
-        
       </div>
     </nav>
   )

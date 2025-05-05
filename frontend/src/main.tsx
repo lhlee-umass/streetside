@@ -16,7 +16,6 @@ import ListingDetailsPage from './pages/ListingDetailsPage'
 
 getDB() // Initialize local database
 
-
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <StrictMode>

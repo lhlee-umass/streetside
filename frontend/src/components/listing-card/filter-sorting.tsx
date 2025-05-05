@@ -24,7 +24,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
     searchTerm: '',
     category: '',
     minPrice: 0,
-    maxPrice: 9999999,  // Default high maxPrice to include all listings by default
+    maxPrice: 9999999, // Default high maxPrice to include all listings by default
     condition: '',
   })
 
@@ -33,7 +33,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
 
   // Effect that re-runs filtering and sorting logic when listings, filters, or sortOrder change
   useEffect(() => {
-    let updatedListings = [...listings]  // Clone listings to avoid mutating props
+    let updatedListings = [...listings] // Clone listings to avoid mutating props
 
     // Filter by search term in title
     if (filters.searchTerm) {
@@ -205,7 +205,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
             </div>
           ))
         ) : (
-          <p>No listings found</p>  // Message if no listings match filters
+          <p>No listings found</p> // Message if no listings match filters
         )}
       </div>
     </div>

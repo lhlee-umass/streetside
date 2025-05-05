@@ -22,7 +22,7 @@ const VerificationBadge: React.FC<VerificationBadgeProps> = ({
         <div>
           {/* Display "Verified as:" label */}
           <span className="text-m">Verified as:</span>
-          
+
           {/* List the verification statuses */}
           <ul className="mt-1 list-none pl-0">
             {verifications.map((verification, index) => (
