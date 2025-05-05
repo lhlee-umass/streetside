@@ -1,27 +1,29 @@
-import React, { useState } from 'react'
-import { MessageBubble } from '../components/message-bubble/MessageBubble'
-import { Link } from 'react-router' // Import Link for navigation
+import React, { useState } from 'react'  // Import React and useState hook to manage component state
+import { MessageBubble } from '../components/message-bubble/MessageBubble'  // Import the MessageBubble component to display individual messages
+import { Link } from 'react-router'  // Import Link for navigation to other pages 
 
 // Define the type for each message
 type Message = {
   sender: 'seller' | 'user' // sender can either be 'seller' or 'user'
-  text: string
+  text: string // The text of the message
 }
 
 const MessageSellerPage: React.FC = () => {
+    // State to manage the current message being typed
   const [message, setMessage] = useState('')
 
-  // Define the messages state with the correct type
+  // State to manage all the messages in the conversation, with type definition for messages
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'seller', text: 'Hello! How can I help you with this item?' },
-    { sender: 'user', text: 'Hi! Is this still available?' },
+    { sender: 'seller', text: 'Hello! How can I help you with this item?' },  // Initial message from seller
+    { sender: 'user', text: 'Hi! Is this still available?' },  // Initial message from user
   ])
 
+  // Function to handle sending a message
   const handleSendMessage = () => {
-    if (message.trim()) {
-      // When sending a message, we specify the sender as 'user'
-      setMessages([...messages, { sender: 'user', text: message }])
-      setMessage('')
+    if (message.trim()) {  // Check if the message is not empty (i.e., not just whitespace)
+      // Add the new message to the messages array with the sender set to 'user'
+      setMessages([...messages, { sender: 'user', text: message }])  
+      setMessage('')  // Clear the input field after sending the message
     }
   }
 
