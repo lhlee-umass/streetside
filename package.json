@@ -39,6 +39,9 @@
     ]
   },
   "dependencies": {
+    "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.5",
+    "pino": "^9.6.0",
     "ulid": "^3.0.0"
   }
 }
