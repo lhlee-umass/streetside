@@ -3,9 +3,9 @@ services:
     build:
       context: ./frontend
     ports:
-      - "8080:8080"
+      - '8080:8080'
     depends_on:
-      - messages  
+      - messages
     networks:
       - app-network
 
@@ -13,7 +13,7 @@ services:
     build:
       context: ./backend/messages
     ports:
-      - "3004:3004"
+      - '3004:3004'
     networks:
       - app-network
 

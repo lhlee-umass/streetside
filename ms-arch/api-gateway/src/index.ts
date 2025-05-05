@@ -1,7 +1,9 @@
-import express from 'express'
-import { createProxyMiddleware } from 'http-proxy-middleware'
-import { pino } from 'pino'
+// Modules that are imported
+import express from 'express' // framework for HTTP server
+import { createProxyMiddleware } from 'http-proxy-middleware' //for routing requests
+import { pino } from 'pino' // for logger
 
+// Create an Express app instance, set the API gateway port to 3000, and create a logger instance with pino
 const app = express()
 const PORT = 3000
 const log = pino({ transport: { target: 'pino-pretty' } })
@@ -9,7 +11,10 @@ const log = pino({ transport: { target: 'pino-pretty' } })
 // Middleware
 app.use(express.json())
 
+// The code below contains each route
 // Routes proxy
+
+// Listings
 app.use(
   '/listings',
   createProxyMiddleware({
@@ -17,6 +22,8 @@ app.use(
     changeOrigin: true,
   })
 )
+
+// Reviews
 app.use(
   '/reviews',
   createProxyMiddleware({
@@ -24,6 +31,8 @@ app.use(
     changeOrigin: true,
   })
 )
+
+// Authentication
 app.use(
   '/auth',
   createProxyMiddleware({
@@ -31,6 +40,8 @@ app.use(
     changeOrigin: true,
   })
 )
+
+// Messages
 app.use(
   '/messages',
   createProxyMiddleware({
