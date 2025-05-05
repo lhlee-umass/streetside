@@ -8,11 +8,10 @@ const port = 3004;
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost/messages', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost/messages')
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.log('Error connecting to MongoDB:', error));
 
-// Message schema and model
 const messageSchema = new mongoose.Schema({
   content: String,
   senderId: String,
@@ -22,7 +21,6 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model('Message', messageSchema);
 
-// Routes
 app.get('/messages', async (req: Request, res: Response) => {
   try {
     const messages = await Message.find();
