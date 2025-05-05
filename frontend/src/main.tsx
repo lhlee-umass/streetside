@@ -14,7 +14,8 @@ import ViewProfile from './pages/profile/ViewProfile'
 import MessageList from './pages/MessageList'
 import ListingDetailsPage from './pages/ListingDetailsPage'
 
-getDB()
+getDB() // Initialize local database
+
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>

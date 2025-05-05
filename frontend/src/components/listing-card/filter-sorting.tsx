@@ -1,5 +1,7 @@
+// Import React and necessary hooks
 import React, { useState, useEffect } from 'react'
 
+// Define the Listing interface to type each listing object
 interface Listing {
   title: string
   tags: string[]
@@ -12,44 +14,57 @@ interface Listing {
   location: string
 }
 
+// Define the ListingComponent which receives an array of listings as props
 const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
+  // State for filtered listings based on user input
   const [filteredListings, setFilteredListings] = useState<Listing[]>([])
+
+  // State to hold various filter options selected by the user
   const [filters, setFilters] = useState({
     searchTerm: '',
     category: '',
     minPrice: 0,
-    maxPrice: 9999999,
+    maxPrice: 9999999,  // Default high maxPrice to include all listings by default
     condition: '',
   })
+
+  // State to determine how listings are sorted
   const [sortOrder, setSortOrder] = useState('price_asc')
 
+  // Effect that re-runs filtering and sorting logic when listings, filters, or sortOrder change
   useEffect(() => {
-    let updatedListings = [...listings]
+    let updatedListings = [...listings]  // Clone listings to avoid mutating props
 
-    // Filtering
+    // Filter by search term in title
     if (filters.searchTerm) {
       updatedListings = updatedListings.filter((listing) =>
         listing.title.toLowerCase().includes(filters.searchTerm.toLowerCase())
       )
     }
+
+    // Filter by selected category (must be included in the tags)
     if (filters.category) {
       updatedListings = updatedListings.filter((listing) =>
         listing.tags.includes(filters.category)
       )
     }
+
+    // Filter by price range
     if (filters.minPrice || filters.maxPrice !== 9999999) {
       updatedListings = updatedListings.filter(
         (listing) =>
           listing.price >= filters.minPrice && listing.price <= filters.maxPrice
       )
     }
+
+    // Filter by item condition (New or Used)
     if (filters.condition) {
       updatedListings = updatedListings.filter(
         (listing) => listing.condition === filters.condition
       )
     }
 
-    // Sorting logic
+    // Sort the filtered listings based on selected sort option
     switch (sortOrder) {
       case 'price_asc':
         updatedListings.sort((a, b) => a.price - b.price)
@@ -68,6 +83,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
         )
         break
       case 'distance':
+        // Use Infinity for missing distances to push them to the end
         updatedListings.sort((a, b) => {
           const distanceA = a.distance || Infinity
           const distanceB = b.distance || Infinity
@@ -78,14 +94,17 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
         break
     }
 
+    // Update the filtered listings state
     setFilteredListings(updatedListings)
   }, [listings, filters, sortOrder])
 
   return (
     <div className="container mx-auto p-4 bg-lime-500 text-black min-h-screen flex items-center justify-center">
+      {/* Filter Section */}
       <div className="bg-lime-400 shadow-lg rounded-lg p-6 max-w-md mx-auto">
         <h3 className="text-lg font-semibold mb-4">Filters</h3>
 
+        {/* Search by Title */}
         <input
           type="text"
           placeholder="Search..."
@@ -96,6 +115,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           className="w-full p-2 mb-3 border border-gray-300 rounded-lg bg-white text-black"
         />
 
+        {/* Category Filter */}
         <select
           value={filters.category}
           onChange={(e) => setFilters({ ...filters, category: e.target.value })}
@@ -109,6 +129,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           <option value="Home Goods">Home Goods</option>
         </select>
 
+        {/* Minimum Price Filter */}
         <input
           type="number"
           placeholder="Min Price"
@@ -119,6 +140,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           className="w-full p-2 mb-3 border border-gray-300 rounded-lg bg-white text-black"
         />
 
+        {/* Maximum Price Filter */}
         <input
           type="number"
           placeholder="Max Price"
@@ -132,6 +154,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           className="w-full p-2 mb-3 border border-gray-300 rounded-lg bg-white text-black"
         />
 
+        {/* Condition Filter */}
         <select
           value={filters.condition}
           onChange={(e) =>
@@ -144,6 +167,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           <option value="Used">Used</option>
         </select>
 
+        {/* Sort Order Selection */}
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
@@ -156,8 +180,12 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
           <option value="distance">Distance</option>
         </select>
       </div>
+
+      {/* Listings Display Section */}
       <div className="bg-lime-400 shadow-lg rounded-lg p-6 max-w-md mx-auto mt-4">
         <h3 className="text-lg font-semibold mb-4">Listings</h3>
+
+        {/* Display filtered listings if available */}
         {filteredListings.length > 0 ? (
           filteredListings.map((listing, index) => (
             <div
@@ -177,7 +205,7 @@ const ListingComponent: React.FC<{ listings: Listing[] }> = ({ listings }) => {
             </div>
           ))
         ) : (
-          <p>No listings found</p>
+          <p>No listings found</p>  // Message if no listings match filters
         )}
       </div>
     </div>
