@@ -1,6 +1,6 @@
-import React, { useState } from 'react'  // Import React and useState hook to manage component state
-import { MessageBubble } from '../components/message-bubble/MessageBubble'  // Import the MessageBubble component to display individual messages
-import { Link } from 'react-router'  // Import Link for navigation to other pages 
+import React, { useState } from 'react' // Import React and useState hook to manage component state
+import { MessageBubble } from '../components/message-bubble/MessageBubble' // Import the MessageBubble component to display individual messages
+import { Link } from 'react-router' // Import Link for navigation to other pages
 
 // Define the type for each message
 type Message = {
@@ -9,21 +9,22 @@ type Message = {
 }
 
 const MessageSellerPage: React.FC = () => {
-    // State to manage the current message being typed
+  // State to manage the current message being typed
   const [message, setMessage] = useState('')
 
   // State to manage all the messages in the conversation, with type definition for messages
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'seller', text: 'Hello! How can I help you with this item?' },  // Initial message from seller
-    { sender: 'user', text: 'Hi! Is this still available?' },  // Initial message from user
+    { sender: 'seller', text: 'Hello! How can I help you with this item?' }, // Initial message from seller
+    { sender: 'user', text: 'Hi! Is this still available?' }, // Initial message from user
   ])
 
   // Function to handle sending a message
   const handleSendMessage = () => {
-    if (message.trim()) {  // Check if the message is not empty (i.e., not just whitespace)
+    if (message.trim()) {
+      // Check if the message is not empty (i.e., not just whitespace)
       // Add the new message to the messages array with the sender set to 'user'
-      setMessages([...messages, { sender: 'user', text: message }])  
-      setMessage('')  // Clear the input field after sending the message
+      setMessages([...messages, { sender: 'user', text: message }])
+      setMessage('') // Clear the input field after sending the message
     }
   }
 
