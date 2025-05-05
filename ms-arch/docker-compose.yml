@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - '3000:3000'
+    depends_on:
+      - listings-service
+      - reviews-service
+      - auth-service
+      - messages-service
+
+  # Laurie's Services
+  listings-service:
+    build: ./listing-service
+    ports:
+      - '3001:3000'
+
+  reviews-service:
+    build: ./reviews-service
+    ports: -'3002:3003'
+# David's Services
+
+# Jelly's Services
