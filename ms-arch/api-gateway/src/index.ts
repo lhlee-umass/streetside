@@ -1,55 +1,61 @@
 // Modules that are imported
 import express from 'express' // framework for HTTP server
-import { createProxyMiddleware } from 'http-proxy-middleware' //for routing requests
 import { pino } from 'pino' // for logger
 
-// Create an Express app instance, set the API gateway port to 3000, and create a logger instance with pino
+// Create an Express app instance, set the API gateway port to 3000, and create a pino logger instance with pretty output
 const app = express()
 const PORT = 3000
 const log = pino({ transport: { target: 'pino-pretty' } })
 
-// Middleware
+// Middleware to parse incoming JSON requests
 app.use(express.json())
 
 // The code below contains each route
 // Routes proxy
 
-// Listings
-app.use(
-  '/listings',
-  createProxyMiddleware({
-    target: 'http://listings-service:3001',
-    changeOrigin: true,
-  })
-)
+// Map of logical service names to internal Docker URLs
+const services: Record<string, string> = {
+  listings: 'http://listing-service:3001',
+  messages: 'http://messaging-service:3004',
+  reviews: 'http://reviews-service:3002',
+}
 
-// Reviews
-app.use(
-  '/reviews',
-  createProxyMiddleware({
-    target: 'http://reviews-service:3002',
-    changeOrigin: true,
-  })
-)
+// Generic proxy handler
+async function proxy(
+  serviceKey: string,
+  req: express.Request,
+  res: express.Response
+) {
+  const target = services[serviceKey]
+  if (!target) return res.status(502).send('Unknown service')
 
-// Authentication
-app.use(
-  '/auth',
-  createProxyMiddleware({
-    target: 'http://auth-service:3003',
-    changeOrigin: true,
-  })
-)
+  try {
+    // Forward request to target service with same path/method/body
+    const response = await fetch(`${target}${req.path}`, {
+      method: req.method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body),
+    })
 
-// Messages
-app.use(
-  '/messages',
-  createProxyMiddleware({
-    target: 'http://messages-service:3004',
-    changeOrigin: true,
-  })
-)
+    // Relay response back to client
+    const data = await response.json()
+    res.status(response.status).json(data)
+  } catch (err) {
+    log.error(`Error proxying to ${serviceKey}: ${(err as Error).message}`)
+    res.status(500).send('Service error')
+  }
+}
 
+// Route definitions that proxy to the correct services
+app.use('/listings', (req: Request, res: Response) =>
+  proxy('listings', req, res)
+)
+app.use('/messages', (req: Request, res: Response) =>
+  proxy('messages', req, res)
+)
+app.use('/reviews', (req: Request, res: Response) => proxy('reviews', req, res))
+
+// Start the gateway server
 app.listen(PORT, () => {
-  log.info(`API Gateway listening on port ${PORT}`)
+  log.info(`API Gateway running on port ${PORT}`)
 })
