@@ -47,13 +47,17 @@ async function proxy(
 }
 
 // Route definitions that proxy to the correct services
-app.use('/listings', (req: Request, res: Response) =>
-  proxy('listings', req, res)
-)
-app.use('/messages', (req: Request, res: Response) =>
-  proxy('messages', req, res)
-)
-app.use('/reviews', (req: Request, res: Response) => proxy('reviews', req, res))
+
+// app.use('/listings', (req, res) => proxy('listings', req, res))
+
+app.all('/listings/*', (req, res) => proxy('listings', req, res))
+app.all('/messages/*', (req, res) => proxy('messages', req, res))
+app.all('/reviews/*', (req, res) => proxy('reviews', req, res))
+
+// Also handle base routes (e.g., /listings)
+app.all('/listings', (req, res) => proxy('listings', req, res))
+app.all('/messages', (req, res) => proxy('messages', req, res))
+app.all('/reviews', (req, res) => proxy('reviews', req, res))
 
 // Start the gateway server
 app.listen(PORT, () => {
