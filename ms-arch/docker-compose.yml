@@ -12,7 +12,7 @@ services:
       - listings-service
       - reviews-service
       # - auth-service
-      - messages-service #to change?
+      - messaging-service #to change?
     networks:
       - skynet
 
@@ -28,8 +28,8 @@ services:
 
   messaging-service:
     build:
-      context: ./reviews-service
-    container_name: reviews-service
+      context: ./messaging-service
+    container_name: messaging-service
     depends_on:
       - mongodb
     ports:
