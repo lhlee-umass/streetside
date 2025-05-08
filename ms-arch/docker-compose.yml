@@ -1,25 +1,59 @@
 version: '3.9'
+name: 'streetside-ms-arch'
 
 services:
   api-gateway:
-    build: ./api-gateway
+    build:
+      context: ./api-gateway
+    container_name: api-gateway
     ports:
       - '3000:3000'
     depends_on:
       - listings-service
       - reviews-service
-      - auth-service
-      - messages-service
+      # - auth-service
+      - messages-service #to change?
+    networks:
+      - skynet
 
   # Laurie's Services
   listings-service:
-    build: ./listing-service
+    build:
+      context: ./listing-service
+    container_name: listing-service
     ports:
       - '3001:3000'
+    networks:
+      - skynet
+
+  messaging-service:
+    build:
+      context: ./reviews-service
+    container_name: reviews-service
+    depends_on:
+      - mongodb
+    ports:
+      - '3002:3000'
+    networks:
+      - skynet
 
   reviews-service:
-    build: ./reviews-service
-    ports: -'3002:3003'
-# David's Services
+    build:
+      context: ./reviews-service
+    container_name: reviews-service
+    ports:
+      - '3002:3000'
+    networks:
+      - skynet
 
-# Jelly's Services
+    mongodb:
+      image: mongo
+      container_name: mongodb
+      ports:
+        - '27017:27017'
+      networks:
+        - skynet
+
+networks:
+  skynet:
+    driver: bridge
