@@ -1,0 +1,16 @@
+FROM node:23-alpine
+
+WORKDIR /app
+
+# Install autocannon globally for testing
+RUN npm install -g autocannon
+
+# Install app dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the app
+COPY . .
+
+# Run in dev mode (assumes ts-node-dev or similar is set up)
+CMD ["npm", "run", "dev"]
