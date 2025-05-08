@@ -14,7 +14,7 @@ app.use(express.json()) // Parse incoming JSON requests
 
 // Connect to MongoDB database
 mongoose
-  .connect('mongodb://localhost/messages') // MongoDB connection URL
+  .connect('mongodb://mongodb/messages') // MongoDB connection URL
   .then(() => console.log('Connected to MongoDB')) // Log success message
   .catch((error) => console.log('Error connecting to MongoDB:', error)) // Log any connection errors
 
