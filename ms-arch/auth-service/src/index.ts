@@ -17,7 +17,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-// User type based on frontend
+// User type sent to clients (no password)
 interface User {
   user_id: string
   username: string
@@ -27,11 +27,15 @@ interface User {
   reward_points: number
   profile_img: string
   verifications: string[]
+}
+
+// Internal user type (includes password)
+interface InternalUser extends User {
   password: string // hashed
 }
 
 // Mongoose User Document type
-interface UserDoc extends User, Document {}
+interface UserDoc extends InternalUser, Document {}
 
 const userSchema = new mongoose.Schema<UserDoc>({
   user_id: { type: String, required: true, unique: true },
@@ -115,8 +119,8 @@ app.post('/login', async (req: Request, res: Response) => {
     if (!valid) {
       return res.status(401).json({ error: 'Invalid credentials' })
     }
-    const userObj = user.toObject() as User
-    delete userObj.password
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _pw, ...userObj } = user.toObject() as InternalUser
     const token = jwt.sign(userObj, JWT_SECRET, { expiresIn: '1d' })
     res.json({ token, user: userObj })
   } catch (err) {

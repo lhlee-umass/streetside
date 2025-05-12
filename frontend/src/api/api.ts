@@ -21,6 +21,7 @@ const curEpoch: () => string = () => (Date.now() / 1000).toFixed(0)
 const BACKEND_URL = 'http://localhost:3000'
 
 let curUser: User | null = null
+let jwt: string | null = null
 
 export const Auth: AuthAPI = {
   async login(email: string, password: string) {
@@ -34,12 +35,14 @@ export const Auth: AuthAPI = {
     const { token, user } = await res.json()
     localStorage.setItem('jwt', token)
     curUser = user
+    jwt = token
     // Optionally store user locally for offline
     await usersDB.create(user)
     return user
   },
   async logout() {
     curUser = null
+    jwt = null
     localStorage.removeItem('jwt')
     return
   },
