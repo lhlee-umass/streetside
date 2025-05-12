@@ -18,7 +18,7 @@ const services: Record<string, string> = {
   listings: 'http://listing-service:3001',
   messages: 'http://messaging-service:3004',
   reviews: 'http://reviews-service:3002',
-  auth: 'http://auth-service:3003',
+  auth: 'http://users-auth-service:3003',
 }
 
 // Generic proxy handler

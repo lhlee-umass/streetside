@@ -11,7 +11,7 @@ services:
     depends_on:
       - listings-service
       - reviews-service
-      - auth-service
+      - users-auth-service
       - messaging-service
     networks:
       - skynet
@@ -46,10 +46,10 @@ services:
     networks:
       - skynet
 
-  auth-service:
+  users-auth-service:
     build:
-      context: ./auth-service
-    container_name: auth-service
+      context: ./users-auth-service
+    container_name: users-auth-service
     depends_on:
       - mongodb
     ports:

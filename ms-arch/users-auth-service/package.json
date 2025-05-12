@@ -1,7 +1,7 @@
 {
-  "name": "auth-service",
+  "name": "users-auth-service",
   "version": "1.0.0",
-  "description": "The authentication service",
+  "description": "The users and authentication service",
   "type": "module",
   "scripts": {
     "dev": "nodemon --watch src/index.ts --exec tsx src/index.ts",
