@@ -6,9 +6,6 @@ WORKDIR /app
 # Install curl for in container testing
 RUN apk add --no-cache curl
 
-# Add environment variable for JWT secret
-ENV JWT_SECRET=supersecretkey
-
 # Copy only the package.json and package-lock.json files first
 COPY package*.json ./
 

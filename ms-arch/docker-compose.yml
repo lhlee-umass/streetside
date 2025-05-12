@@ -54,8 +54,8 @@ services:
       - mongodb
     ports:
       - '3003:3000'
-    environment:
-      - JWT_SECRET=supersecretkey
+    env_file:
+      - .env
     networks:
       - skynet
 

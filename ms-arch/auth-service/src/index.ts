@@ -4,6 +4,9 @@ import mongoose, { Document, Schema } from 'mongoose'
 import cors from 'cors'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
+import { z } from 'zod'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey' // Use env var in prod
 const PORT = 3000
@@ -48,13 +51,30 @@ mongoose.connect(MONGO_URL)
   .then(() => log.info('Connected to MongoDB'))
   .catch((error) => log.error('Error connecting to MongoDB:', error))
 
+// Zod schemas for input validation
+const registerSchema = z.object({
+  username: z.string().min(1),
+  first_name: z.string().optional(),
+  last_name: z.string().optional(),
+  email: z.string().email(),
+  password: z.string().min(1),
+  profile_img: z.string().optional(),
+  verifications: z.array(z.string()).optional(),
+})
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1),
+})
+
 // Create account
 app.post('/register', async (req: Request, res: Response) => {
   try {
-    const { username, first_name, last_name, email, password, profile_img, verifications } = req.body
-    if (!username || !email || !password) {
-      return res.status(400).json({ error: 'Missing required fields' })
+    const parseResult = registerSchema.safeParse(req.body)
+    if (!parseResult.success) {
+      return res.status(400).json({ error: 'Invalid input', details: parseResult.error.errors })
     }
+    const { username, first_name, last_name, email, password, profile_img, verifications } = parseResult.data
     const existing = await UserModel.findOne({ email })
     if (existing) {
       return res.status(409).json({ error: 'Email already registered' })
@@ -82,10 +102,11 @@ app.post('/register', async (req: Request, res: Response) => {
 // Login
 app.post('/login', async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.body
-    if (!email || !password) {
-      return res.status(400).json({ error: 'Missing email or password' })
+    const parseResult = loginSchema.safeParse(req.body)
+    if (!parseResult.success) {
+      return res.status(400).json({ error: 'Invalid input', details: parseResult.error.errors })
     }
+    const { email, password } = parseResult.data
     const user = await UserModel.findOne({ email })
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' })

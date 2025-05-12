@@ -18,12 +18,14 @@ import type {
 // FIXME: delete this and figure out errors: when there is a backend, it should be the one determining these times
 const curEpoch: () => string = () => (Date.now() / 1000).toFixed(0)
 
+const BACKEND_URL = 'http://localhost:3000'
+
 let curUser: User | null = null
 
 export const Auth: AuthAPI = {
   async login(email: string, password: string) {
     // Call backend for login
-    const res = await fetch('http://localhost:3003/login', {
+    const res = await fetch(`${BACKEND_URL}/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -43,7 +45,7 @@ export const Auth: AuthAPI = {
   },
   async register(user) {
     // Call backend for registration
-    const res = await fetch('http://localhost:3003/register', {
+    const res = await fetch(`${BACKEND_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
