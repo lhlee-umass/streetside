@@ -48,7 +48,7 @@ const AuthPage: React.FC = () => {
 
     // If it's a login attempt, authenticate the user
     if (isLogin) {
-      Auth.login(formData.email).then((user) => {
+      Auth.login(formData.email, formData.password).then((user) => {
         if (!user) {
           setError('User not found.') // Show error if user is not found
           return
@@ -57,17 +57,35 @@ const AuthPage: React.FC = () => {
         setTimeout(() => {
           navigate('/') // Navigate to the homepage after a successful login
         }, 1000) // 1 second delay before redirecting
+      }).catch((err) => {
+        setError('Login failed: ' + err.message)
       })
       return
     }
 
-    // If it's a signup attempt, show success message (for now, just simulate success)
-    setSuccess(
-      isLogin
-        ? 'Login successful! Logging you in...'
-        : 'Sign up successful! Logging you in...'
-    )
-    console.log(isLogin ? 'Logging in...' : 'Signing up...') // Log the action in the console (for debugging)
+    // If it's a signup attempt, call backend register
+    if (!isLogin) {
+      // You may want to collect more fields for registration
+      Auth.register({
+        email: formData.email,
+        password: formData.password,
+        username: formData.email.split('@')[0], // simple default username
+        first_name: '',
+        last_name: '',
+        reward_points: 0,
+        profile_img: '',
+        verifications: [],
+        user_id: '', // let backend generate
+      }).then((user) => {
+        setSuccess('Sign up successful! Logging you in...')
+        setTimeout(() => {
+          navigate('/')
+        }, 1000)
+      }).catch((err) => {
+        setError('Sign up failed: ' + err.message)
+      })
+      return
+    }
   }
 
   return (

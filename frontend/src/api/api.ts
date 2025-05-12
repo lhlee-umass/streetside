@@ -21,23 +21,36 @@ const curEpoch: () => string = () => (Date.now() / 1000).toFixed(0)
 let curUser: User | null = null
 
 export const Auth: AuthAPI = {
-  async login(email) {
-    curUser = (await usersDB.getAll()).filter((user) => user.email === email)[0]
-    return curUser
+  async login(email: string, password: string) {
+    // Call backend for login
+    const res = await fetch('http://localhost:3003/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    if (!res.ok) throw new Error('Login failed')
+    const { token, user } = await res.json()
+    localStorage.setItem('jwt', token)
+    curUser = user
+    // Optionally store user locally for offline
+    await usersDB.create(user)
+    return user
   },
   async logout() {
     curUser = null
+    localStorage.removeItem('jwt')
     return
   },
   async register(user) {
-    // FIXME: when there is a backend, make sure backend is setting the ulid -- creation should always send to backend, get result from backend, then store that in local db with ulid from backend
-    const newUser = {
-      ...user,
-      user_id: ulid(),
-    }
-    await usersDB.create(newUser)
-    curUser = newUser
-    return curUser
+    // Call backend for registration
+    const res = await fetch('http://localhost:3003/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(user)
+    })
+    if (!res.ok) throw new Error('Registration failed')
+    // After registration, login
+    return this.login(user.email, user.password)
   },
   async getCurrentUser() {
     return curUser
