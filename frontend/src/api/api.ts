@@ -23,12 +23,27 @@ const BACKEND_URL = 'http://localhost:3000'
 let curUser: User | null = null
 let jwt: string | null = null
 
+// Helper to fetch from backend with JWT and BACKEND_URL
+async function fetchFromBackend(route: string, options: RequestInit = {}) {
+  const token = jwt || localStorage.getItem('jwt')
+  const headers: Record<string, string> = {
+    ...(options.headers as Record<string, string> | undefined),
+  }
+  if (token) headers['Authorization'] = `Bearer ${token}`
+  if (options.body && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json'
+  }
+  const res = await fetch(`${BACKEND_URL}${route}`, {
+    ...options,
+    headers,
+  })
+  return res
+}
+
 export const Auth: AuthAPI = {
   async login(email: string, password: string) {
-    // Call backend for login
-    const res = await fetch(`${BACKEND_URL}/auth/login`, {
+    const res = await fetchFromBackend('/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
     })
     if (!res.ok) throw new Error('Login failed')
@@ -36,8 +51,7 @@ export const Auth: AuthAPI = {
     localStorage.setItem('jwt', token)
     curUser = user
     jwt = token
-    // Optionally store user locally for offline
-    await usersDB.create(user)
+    await usersDB.update(user)
     return user
   },
   async logout() {
@@ -47,14 +61,11 @@ export const Auth: AuthAPI = {
     return
   },
   async register(user) {
-    // Call backend for registration
-    const res = await fetch(`${BACKEND_URL}/auth/register`, {
+    const res = await fetchFromBackend('/auth/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(user)
     })
     if (!res.ok) throw new Error('Registration failed')
-    // After registration, login
     return this.login(user.email, user.password)
   },
   async getCurrentUser() {
@@ -64,14 +75,30 @@ export const Auth: AuthAPI = {
 
 export const Users: UsersAPI = {
   async getUser(userId) {
-    return usersDB.get(userId)
-  },
-  async getUsers() {
-    return usersDB.getAll()
-  },
-  async updateUser(user) {
+    const res = await fetchFromBackend(`/users/${userId}`)
+    if (!res.ok) throw new Error('User not found')
+    const user = await res.json()
     await usersDB.update(user)
     return user
+  },
+  async getUsers() {
+    const res = await fetchFromBackend('/users')
+    if (!res.ok) throw new Error('Failed to fetch users')
+    const users = await res.json()
+    for (const user of users) {
+      await usersDB.update(user)
+    }
+    return users
+  },
+  async updateUser(user) {
+    const res = await fetchFromBackend(`/users/${user.user_id}`, {
+      method: 'PUT',
+      body: JSON.stringify(user)
+    })
+    if (!res.ok) throw new Error('Failed to update user')
+    const updatedUser = await res.json()
+    await usersDB.update(updatedUser)
+    return updatedUser
   },
 }
 

@@ -10,7 +10,7 @@ import { z } from 'zod'
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey' // Use env var in prod
 const PORT = 3000
-const MONGO_URL = 'mongodb://mongodb/auth'
+const MONGO_URL = 'mongodb://mongodb/users' // Use a 'users' database for user data
 
 const log = pino({ transport: { target: 'pino-pretty' } })
 const app = express()
@@ -71,8 +71,23 @@ const loginSchema = z.object({
   password: z.string().min(1),
 })
 
+// Helper to extract and verify JWT from Authorization header
+function getUserFromAuthHeader(authHeader: string | undefined, res: Response): User | undefined {
+  if (!authHeader) {
+    res.status(401).json({ error: 'No token' })
+    return undefined
+  }
+  const token = authHeader.split(' ')[1]
+  try {
+    return jwt.verify(token, JWT_SECRET) as User
+  } catch {
+    res.status(401).json({ error: 'Invalid token' })
+    return undefined
+  }
+}
+
 // Create account
-app.post('/register', async (req: Request, res: Response) => {
+app.post('/auth/register', async (req: Request, res: Response) => {
   try {
     const parseResult = registerSchema.safeParse(req.body)
     if (!parseResult.success) {
@@ -104,7 +119,7 @@ app.post('/register', async (req: Request, res: Response) => {
 })
 
 // Login
-app.post('/login', async (req: Request, res: Response) => {
+app.post('/auth/login', async (req: Request, res: Response) => {
   try {
     const parseResult = loginSchema.safeParse(req.body)
     if (!parseResult.success) {
@@ -130,15 +145,57 @@ app.post('/login', async (req: Request, res: Response) => {
 })
 
 // Auth middleware example
-app.get('/me', async (req: Request, res: Response) => {
-  const auth = req.headers.authorization
-  if (!auth) return res.status(401).json({ error: 'No token' })
-  const token = auth.split(' ')[1]
+app.get('/auth/me', async (req: Request, res: Response) => {
+  const decoded = getUserFromAuthHeader(req.headers.authorization, res)
+  if (!decoded) return
+  res.json(decoded)
+})
+
+// --- USERS ENDPOINTS ---
+// Get all users
+app.get('/users', async (req: Request, res: Response) => {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET)
-    res.json(decoded)
-  } catch {
-    res.status(401).json({ error: 'Invalid token' })
+    const users = await UserModel.find({}, '-password') // Exclude password
+    res.json(users)
+  } catch (err) {
+    log.error('Get users error', err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
+// Get a single user by user_id
+app.get('/users/:userId', async (req: Request, res: Response) => {
+  try {
+    const user = await UserModel.findOne({ user_id: req.params.userId }, '-password')
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    res.json(user)
+  } catch (err) {
+    log.error('Get user error', err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
+// Update a user (protected route)
+app.put('/users/:userId', async (req: Request, res: Response) => {
+  try {
+    const decoded = getUserFromAuthHeader(req.headers.authorization, res)
+    if (!decoded) return
+    // Only allow user to update their own details
+    if (decoded.user_id !== req.params.userId) {
+      return res.status(403).json({ error: 'Forbidden: cannot modify another user' })
+    }
+    // Only allow updating certain fields
+    const updateFields = (({ first_name, last_name, profile_img, verifications, reward_points }) => ({ first_name, last_name, profile_img, verifications, reward_points }))(req.body)
+    const user = await UserModel.findOneAndUpdate(
+      { user_id: req.params.userId },
+      { $set: updateFields },
+      { new: true, projection: '-password' }
+    )
+    if (!user) return res.status(404).json({ error: 'User not found' })
+    res.json(user)
+  } catch (err) {
+    log.error('Update user error', err)
+    res.status(500).json({ error: 'Internal server error' })
   }
 })
 

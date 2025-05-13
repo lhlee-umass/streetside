@@ -55,12 +55,14 @@ app.all('/listings/*', (req, res) => proxy('listings', req, res))
 app.all('/messages/*', (req, res) => proxy('messages', req, res))
 app.all('/reviews/*', (req, res) => proxy('reviews', req, res))
 app.all('/auth/*', (req: express.Request, res: express.Response) => proxy('auth', req, res))
+app.all('/users/*', (req: express.Request, res: express.Response) => proxy('auth', req, res))
 
 // Also handle base routes (e.g., /listings)
 app.all('/listings', (req, res) => proxy('listings', req, res))
 app.all('/messages', (req, res) => proxy('messages', req, res))
 app.all('/reviews', (req, res) => proxy('reviews', req, res))
 app.all('/auth', (req: express.Request, res: express.Response) => proxy('auth', req, res))
+app.all('/users', (req: express.Request, res: express.Response) => proxy('auth', req, res))
 
 // Start the gateway server
 app.listen(PORT, () => {
