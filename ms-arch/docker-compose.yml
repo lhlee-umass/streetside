@@ -11,8 +11,8 @@ services:
     depends_on:
       - listings-service
       - reviews-service
-      # - auth-service
-      - messaging-service #to change?
+      - users-auth-service
+      - messaging-service
     networks:
       - skynet
 
@@ -43,6 +43,19 @@ services:
     container_name: reviews-service
     ports:
       - '3002:3000'
+    networks:
+      - skynet
+
+  users-auth-service:
+    build:
+      context: ./users-auth-service
+    container_name: users-auth-service
+    depends_on:
+      - mongodb
+    ports:
+      - '3003:3000'
+    env_file:
+      - .env
     networks:
       - skynet
 

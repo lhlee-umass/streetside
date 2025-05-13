@@ -83,9 +83,9 @@ interface dbInterface<T> {
 }
 
 export interface AuthAPI {
-  login(email: string): Promise<User>
+  login(email: string, password: string): Promise<User>
   logout(): Promise<void>
-  register(user: User): Promise<User>
+  register(user: User & { password: string }): Promise<User>
   getCurrentUser(): Promise<User | null>
 }
 
